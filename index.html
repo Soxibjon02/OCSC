@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Clothes Shopping Center (OCSC) - Experience premium luxury fashion for men, women, and kids with modern, minimalist, and elegant apparel collection.">
+    <meta name="keywords" content="OCSC, online clothes shopping center, luxury fashion, minimalist clothing, premium clothing store">
+    <title>OCSC - Online Clothes Shopping Center | Premium Fashion Store</title>
+    
+    <!-- Remix Icon Library -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Main Style sheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- CRM dashboard styling -->
+    <link rel="stylesheet" href="css/crm.css">
+</head>
+<body>
+
+    <!-- Beautiful Loading Screen -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader-logo">OCSC<span>.</span></div>
+        <div class="loader-line">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo" id="logo-anchor">OCSC<span>.</span></a>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#" class="nav-link active">Home</a></li>
+                <li><a href="#categories" class="nav-link">Categories</a></li>
+                <li><a href="#trending" class="nav-link">Trending</a></li>
+                <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
+                <li><a href="#best-sellers" class="nav-link">Best Sellers</a></li>
+                <li><a href="#sale" class="nav-link">Sale</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <!-- CRM Toggle Button -->
+                <button class="crm-btn" id="crm-view-btn">CRM Panel</button>
+
+                <!-- Search bar -->
+                <div class="search-box">
+                    <i class="ri-search-line"></i>
+                    <input type="text" placeholder="Search collection..." id="search-input" aria-label="Search">
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-switch" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="ri-moon-line" id="theme-icon"></i>
+                </button>
+
+                <!-- Wishlist Badge Trigger -->
+                <button class="icon-btn" id="wishlist-toggle" aria-label="View Wishlist">
+                    <i class="ri-heart-line"></i>
+                    <span class="badge" id="wishlist-badge">0</span>
+                </button>
+
+                <!-- Cart Badge Trigger -->
+                <button class="icon-btn" id="cart-toggle" aria-label="Open Shopping Bag">
+                    <i class="ri-shopping-bag-line"></i>
+                    <span class="badge" id="cart-badge">0</span>
+                </button>
+
+                <!-- Mobile menu burger -->
+                <div class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg" style="background-image: url('images/hero_banner.png');"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-subtitle">New Collection 2026</span>
+                <h1 class="hero-title">Elevate Your Style<br>With <span>Absolute Elegance</span></h1>
+                <p class="hero-desc">Discover the premium seasonal arrivals at OCSC. Curated luxury wear designed with clean minimalism, exquisite cuts, and sophisticated details.</p>
+                <div class="hero-btns">
+                    <a href="#categories" class="btn btn-primary">Shop Now</a>
+                    <a href="#trending" class="btn btn-secondary">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Curated Wardrobe</span>
+                <h2 class="section-title">Shop by Category</h2>
+            </div>
+            
+            <div class="category-grid">
+                <!-- Women's Fashion -->
+                <div class="category-card" onclick="location.href='#trending'">
+                    <img class="category-img" src="images/womens_fashion.png" alt="Women's Collection">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Women's Fashion</h3>
+                        <span class="category-link">Discover collection &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Men's Fashion -->
+                <div class="category-card" onclick="location.href='#trending'">
+                    <img class="category-img" src="images/mens_fashion.png" alt="Men's Collection">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Men's Fashion</h3>
+                        <span class="category-link">Discover collection &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Kids Fashion -->
+                <div class="category-card" onclick="location.href='#trending'">
+                    <img class="category-img" src="images/kids_fashion.png" alt="Kids Collection">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Kids Fashion</h3>
+                        <span class="category-link">Discover collection &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Accessories -->
+                <div class="category-card" onclick="location.href='#trending'">
+                    <img class="category-img" src="images/accessories.png" alt="Accessories Collection">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Accessories</h3>
+                        <span class="category-link">Discover collection &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Products Section -->
+    <section class="section" id="trending" style="background-color: var(--bg-light); border-top: 1px solid var(--glass-border);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Most Wanted Items</span>
+                <h2 class="section-title">Trending Now</h2>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge sale">Sale</span>
+                        <img class="product-img" src="images/womens_fashion.png" alt="Classic Trench Coat">
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" data-id="1" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                            <button class="action-btn quick-view-btn" data-id="1" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                            <button class="action-btn add-to-cart-btn" data-id="1" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Women's Fashion</div>
+                        <h3 class="product-title">Classic Trench Coat</h3>
+                        <div class="product-rating">
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                        </div>
+                        <div class="product-price">$189.00 <span>$249.00</span></div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img class="product-img" src="images/mens_fashion.png" alt="Tailored Wool Suit">
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" data-id="2" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                            <button class="action-btn quick-view-btn" data-id="2" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                            <button class="action-btn add-to-cart-btn" data-id="2" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Men's Fashion</div>
+                        <h3 class="product-title">Tailored Wool Suit</h3>
+                        <div class="product-rating">
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+                        </div>
+                        <div class="product-price">$450.00</div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge sale">Sale</span>
+                        <img class="product-img" src="images/product1.png" alt="Minimalist Linen Blazer">
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" data-id="3" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                            <button class="action-btn quick-view-btn" data-id="3" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                            <button class="action-btn add-to-cart-btn" data-id="3" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Women's Fashion</div>
+                        <h3 class="product-title">Minimalist Linen Blazer</h3>
+                        <div class="product-rating">
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-line"></i>
+                        </div>
+                        <div class="product-price">$129.00 <span>$159.00</span></div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">Best Seller</span>
+                        <img class="product-img" src="images/accessories.png" alt="Premium Leather Handbag">
+                        <div class="product-actions">
+                            <button class="action-btn wishlist-btn" data-id="4" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                            <button class="action-btn quick-view-btn" data-id="4" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                            <button class="action-btn add-to-cart-btn" data-id="4" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Accessories</div>
+                        <h3 class="product-title">Premium Leather Handbag</h3>
+                        <div class="product-rating">
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                        </div>
+                        <div class="product-price">$299.00 <span>$380.00</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="section" id="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Exquisite Editorial</span>
+                <h2 class="section-title">New Arrivals Collection</h2>
+            </div>
+
+            <div class="new-arrivals-banner">
+                <div class="arrival-side-img" style="background-image: url('images/hero_banner.png');"></div>
+                <div class="arrival-side-content">
+                    <span class="arrival-tag">Premium Collection</span>
+                    <h3 class="arrival-title">Vogue & Clean Tailoring Aesthetics</h3>
+                    <p class="arrival-desc">We combine contemporary cuts with timeless luxury fabrics to create the perfect silhouettes. Shop the newly arrived seasonal coats, blazers, and custom footwear designed to bring an unmatched editorial style into your daily life.</p>
+                    <div>
+                        <a href="#trending" class="btn btn-primary">Shop The Look</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Slider Section -->
+    <section class="section" id="best-sellers" style="background-color: var(--bg-light); border-top: 1px solid var(--glass-border);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Popular Demand</span>
+                <h2 class="section-title">OCSC Best Sellers</h2>
+            </div>
+
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous slide"><i class="ri-arrow-left-s-line"></i></button>
+                <button class="carousel-btn next" id="carousel-next" aria-label="Next slide"><i class="ri-arrow-right-s-line"></i></button>
+
+                <div class="carousel-track" id="carousel-track">
+                    <!-- Slide 5 -->
+                    <div class="carousel-slide">
+                        <div class="product-card">
+                            <div class="product-img-wrapper">
+                                <img class="product-img" src="images/kids_fashion.png" alt="Kids Cashmere Sweater">
+                                <div class="product-actions">
+                                    <button class="action-btn wishlist-btn" data-id="5" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                                    <button class="action-btn quick-view-btn" data-id="5" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                                    <button class="action-btn add-to-cart-btn" data-id="5" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category">Kids Fashion</div>
+                                <h3 class="product-title">Kids Cashmere Sweater</h3>
+                                <div class="product-rating">
+                                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+                                </div>
+                                <div class="product-price">$89.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6 -->
+                    <div class="carousel-slide">
+                        <div class="product-card">
+                            <div class="product-img-wrapper">
+                                <img class="product-img" src="images/womens_fashion.png" alt="Chiffon Summer Dress">
+                                <div class="product-actions">
+                                    <button class="action-btn wishlist-btn" data-id="6" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                                    <button class="action-btn quick-view-btn" data-id="6" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                                    <button class="action-btn add-to-cart-btn" data-id="6" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category">Women's Fashion</div>
+                                <h3 class="product-title">Chiffon Summer Dress</h3>
+                                <div class="product-rating">
+                                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                </div>
+                                <div class="product-price">$119.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 7 -->
+                    <div class="carousel-slide">
+                        <div class="product-card">
+                            <div class="product-img-wrapper">
+                                <span class="product-badge sale">Sale</span>
+                                <img class="product-img" src="images/accessories.png" alt="Gold Anchor Cufflinks">
+                                <div class="product-actions">
+                                    <button class="action-btn wishlist-btn" data-id="7" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                                    <button class="action-btn quick-view-btn" data-id="7" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                                    <button class="action-btn add-to-cart-btn" data-id="7" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category">Accessories</div>
+                                <h3 class="product-title">Gold Anchor Cufflinks</h3>
+                                <div class="product-rating">
+                                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-line"></i>
+                                </div>
+                                <div class="product-price">$75.00 <span>$95.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 8 -->
+                    <div class="carousel-slide">
+                        <div class="product-card">
+                            <div class="product-img-wrapper">
+                                <img class="product-img" src="images/mens_fashion.png" alt="Tailored Oxford Shirt">
+                                <div class="product-actions">
+                                    <button class="action-btn wishlist-btn" data-id="8" aria-label="Add to wishlist"><i class="ri-heart-line"></i></button>
+                                    <button class="action-btn quick-view-btn" data-id="8" aria-label="Quick view"><i class="ri-eye-line"></i></button>
+                                    <button class="action-btn add-to-cart-btn" data-id="8" aria-label="Add to cart"><i class="ri-shopping-bag-line"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-category">Men's Fashion</div>
+                                <h3 class="product-title">Tailored Oxford Shirt</h3>
+                                <div class="product-rating">
+                                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+                                </div>
+                                <div class="product-price">$95.00 <span>$120.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Discount Countdown Banner -->
+    <section class="discount-banner" id="sale" style="background-image: url('images/hero_banner.png');">
+        <div class="discount-overlay"></div>
+        <div class="container">
+            <div class="discount-content">
+                <h2 class="discount-title">Special Seasonal <span>Black & Gold Sale</span></h2>
+                <p class="discount-subtitle">Subscribe or purchase during this countdown to unlock an extra 20% off all luxury accessories and winter blazers. Discount applied automatically at checkout.</p>
+                
+                <div class="countdown-container">
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="days">05</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="hours">12</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="mins">45</span>
+                        <span class="countdown-label">Mins</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-num" id="secs">23</span>
+                        <span class="countdown-label">Secs</span>
+                    </div>
+                </div>
+
+                <a href="#trending" class="btn btn-primary">Grab The Sale Items</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews / Testimonials -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Client Testimonials</span>
+                <h2 class="section-title">Reviews From Our Customers</h2>
+            </div>
+
+            <div class="reviews-grid">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                    </div>
+                    <p class="review-text">"I am absolutely delighted with the Trench Coat. The stitching, material, and alignment are exactly as you'd find in ultra-expensive luxury boutiques. Fits perfectly."</p>
+                    <div class="reviewer-info">
+                        <img class="reviewer-img" src="images/womens_fashion.png" alt="Sarah K.">
+                        <div>
+                            <h4 class="reviewer-name">Sarah Jenkins</h4>
+                            <span class="reviewer-role">Fashion Designer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                    </div>
+                    <p class="review-text">"The tailored wool suit has a beautiful flow and fit. The premium service, presentation, and fast shipment have made OCSC my go-to luxury clothing center online."</p>
+                    <div class="reviewer-info">
+                        <img class="reviewer-img" src="images/mens_fashion.png" alt="David M.">
+                        <div>
+                            <h4 class="reviewer-name">David Miller</h4>
+                            <span class="reviewer-role">Architect</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+                    </div>
+                    <p class="review-text">"Highly sophisticated products. The minimalist blazers are breathable and look great during office conferences and casual dinners alike. Truly outstanding style!"</p>
+                    <div class="reviewer-info">
+                        <img class="reviewer-img" src="images/product1.png" alt="Elena R.">
+                        <div>
+                            <h4 class="reviewer-name">Elena Rostova</h4>
+                            <span class="reviewer-role">Stylist & Editor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="newsletter">
+        <div class="container newsletter-box">
+            <h2 class="newsletter-title">Join The OCSC Club</h2>
+            <p class="newsletter-desc">Subscribe to stay updated with luxury collection launches, design lookbooks, and exclusive subscriber promotions.</p>
+            <form class="newsletter-form" id="newsletter-form">
+                <input type="email" placeholder="Enter your email address..." required aria-label="Email Address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CRM Dashboard Section -->
+    <section class="crm-section" id="crm-section">
+        <div class="container">
+            <div class="crm-header-row">
+                <h2 class="crm-title">OCSC <span>Management CRM</span></h2>
+                <button class="btn btn-primary" id="add-product-btn">Add Product</button>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="crm-stats-grid">
+                <div class="crm-stat-card">
+                    <div class="crm-stat-icon"><i class="ri-wallet-3-line"></i></div>
+                    <div class="crm-stat-info">
+                        <h4>Total Revenue</h4>
+                        <div class="crm-stat-value" id="crm-revenue">$1,293.00</div>
+                    </div>
+                </div>
+                <div class="crm-stat-card">
+                    <div class="crm-stat-icon"><i class="ri-shopping-bag-3-line"></i></div>
+                    <div class="crm-stat-info">
+                        <h4>Total Orders</h4>
+                        <div class="crm-stat-value" id="crm-orders">6</div>
+                    </div>
+                </div>
+                <div class="crm-stat-card">
+                    <div class="crm-stat-icon"><i class="ri-user-star-line"></i></div>
+                    <div class="crm-stat-info">
+                        <h4>Subscribers</h4>
+                        <div class="crm-stat-value" id="crm-subs">124</div>
+                    </div>
+                </div>
+                <div class="crm-stat-card">
+                    <div class="crm-stat-icon"><i class="ri-store-line"></i></div>
+                    <div class="crm-stat-info">
+                        <h4>Active Products</h4>
+                        <div class="crm-stat-value" id="crm-products-count">8</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRM Layout -->
+            <div class="crm-layout">
+                <!-- Orders and Products management -->
+                <div>
+                    <div class="crm-block">
+                        <div class="crm-block-title">Recent Customer Orders</div>
+                        <div class="crm-table-wrapper">
+                            <table class="crm-table">
+                               <thead>
+                                   <tr>
+                                       <th>Order ID</th>
+                                       <th>Customer</th>
+                                       <th>Items</th>
+                                       <th>Total</th>
+                                       <th>Status</th>
+                                       <th>Actions</th>
+                                   </tr>
+                               </thead>
+                               <tbody id="crm-orders-list">
+                                   <!-- Orders generated dynamically by JS -->
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="crm-block">
+                        <div class="crm-block-title">Store Products Management</div>
+                        <div class="crm-table-wrapper">
+                            <table class="crm-table">
+                               <thead>
+                                   <tr>
+                                       <th>ID</th>
+                                       <th>Product</th>
+                                       <th>Category</th>
+                                       <th>Price</th>
+                                       <th>Rating</th>
+                                       <th>Actions</th>
+                                   </tr>
+                               </thead>
+                               <tbody id="crm-products-list">
+                                   <!-- Products generated dynamically by JS -->
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product entry form -->
+                <div>
+                    <div class="crm-block">
+                        <div class="crm-block-title" id="form-action-title">Add / Edit Product</div>
+                        <form id="crm-product-form">
+                            <input type="hidden" id="edit-product-id" value="">
+                            <div class="crm-form-group">
+                                <label for="prod-name">Product Title</label>
+                                <input type="text" id="prod-name" required placeholder="e.g. Silk Evening Gown">
+                            </div>
+                            <div class="crm-form-group">
+                                <label for="prod-category">Category</label>
+                                <select id="prod-category">
+                                    <option value="Women's Fashion">Women's Fashion</option>
+                                    <option value="Men's Fashion">Men's Fashion</option>
+                                    <option value="Kids Fashion">Kids Fashion</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="crm-form-group">
+                                <label for="prod-price">Price ($)</label>
+                                <input type="number" id="prod-price" step="0.01" min="1" required placeholder="e.g. 150.00">
+                            </div>
+                            <div class="crm-form-group">
+                                <label for="prod-desc">Description</label>
+                                <textarea id="prod-desc" rows="4" required placeholder="Product detail specs..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Product</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="footer-logo">OCSC<span>.</span></h3>
+                    <p class="footer-about">Online Clothes Shopping Center (OCSC) is a modern luxury clothing outlet delivering curated, minimalist designs with a focus on high tailoring, clean shapes, and quality textiles.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><i class="ri-twitter-line"></i></a>
+                        <a href="#" class="social-btn" aria-label="Pinterest"><i class="ri-pinterest-line"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Home</a></li>
+                        <li><a href="#categories" class="footer-link">Categories</a></li>
+                        <li><a href="#trending" class="footer-link">Trending Products</a></li>
+                        <li><a href="#new-arrivals" class="footer-link">New Arrivals</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Help & Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Shipping & Returns</a></li>
+                        <li><a href="#" class="footer-link">Secure Checkout</a></li>
+                        <li><a href="#" class="footer-link">Size Guides</a></li>
+                        <li><a href="#" class="footer-link">Track Order</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <div class="footer-contact">
+                        <div class="footer-contact-item">
+                            <i class="ri-map-pin-line"></i>
+                            <span>100 Luxury Avenue, Suite 500, NY</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="ri-phone-line"></i>
+                            <span>+1 (800) 123-OCSC</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="ri-mail-line"></i>
+                            <span>support@ocsc.fashion.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 OCSC (Online Clothes Shopping Center). All Rights Reserved.</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="color: #666;">Privacy Policy</a>
+                    <a href="#" style="color: #666;">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar Drawer -->
+    <div class="cart-overlay-bg" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Bag (<span id="cart-count">0</span>)</h3>
+            <button class="cart-close" id="cart-close" aria-label="Close Bag"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Items injected by JS -->
+            <div style="text-align: center; color: var(--text-muted); margin-top: 50px;">
+                <i class="ri-shopping-bag-line" style="font-size: 40px; color: var(--accent); display: block; margin-bottom: 15px;"></i>
+                <p>Your bag is empty.</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal:</span>
+                <span id="cart-subtotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary cart-checkout-btn" id="checkout-btn">Checkout Now</button>
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quickview-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Close View"><i class="ri-close-line"></i></button>
+            <div class="modal-img-side">
+                <img src="images/womens_fashion.png" alt="Product View">
+            </div>
+            <div class="modal-info-side">
+                <h3 class="modal-title">Product Title</h3>
+                <div class="modal-price">$0.00</div>
+                <p class="modal-desc">Product description...</p>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary add-to-cart-btn modal-cart-btn" style="width: 100%;">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- App Logic Script -->
+    <script src="js/app.js"></script>
+</body>
+</html>
