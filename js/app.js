@@ -244,12 +244,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let isCrmActive = false;
 
     crmViewBtn.addEventListener("click", () => {
+        if (!isCrmActive) {
+            // CRM Authentication
+            const password = prompt("Iltimos, CRM panelga kirish parolini kiriting:");
+            if (password !== "admin123") {
+                showToast("Xato parol! CRM panelga kirish taqiqlandi.");
+                return;
+            }
+        }
+
         isCrmActive = !isCrmActive;
         if (isCrmActive) {
             crmViewBtn.innerText = "Store View";
             crmSection.classList.add("active");
             // Hide all standard storefront wrappers
             document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "none");
+            // Hide storefront navigation links
+            const navMenu = document.getElementById("nav-menu");
+            if (navMenu) navMenu.style.display = "none";
             loadCrmDashboard();
             showToast("OCSC Management CRM Dashboard Activated");
         } else {
@@ -257,6 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
             crmSection.classList.remove("active");
             // Show all standard storefront wrappers
             document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "block");
+            // Show storefront navigation links
+            const navMenu = document.getElementById("nav-menu");
+            if (navMenu) navMenu.style.display = "flex";
             showToast("Returned to Customer Storefront");
         }
     });
