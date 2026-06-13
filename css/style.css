@@ -326,6 +326,7 @@ button {
     position: relative;
     display: flex;
     align-items: center;
+    padding-top: 80px; /* Offset for the fixed header */
     overflow: hidden;
     background-color: #000;
 }
@@ -357,6 +358,7 @@ button {
     z-index: 10;
     max-width: 800px;
     color: #FFFFFF;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
