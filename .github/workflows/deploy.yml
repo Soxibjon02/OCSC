@@ -1,4 +1,4 @@
-name: OCSC Deploy — GitHub Pages + AWS S3
+name: OCSC Deploy — GitHub Pages + AWS S3 + CloudFront
 
 on:
   push:
@@ -60,18 +60,60 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Sync files to S3 Bucket
+
+      - name: Sync HTML files (correct content-type)
         run: |
-          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} --delete --exclude ".git/*" --exclude ".github/*" --cache-control "max-age=86400"
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "*" \
+            --include "*.html" \
+            --content-type "text/html; charset=utf-8" \
+            --cache-control "max-age=0, no-cache"
+
+      - name: Sync CSS files
+        run: |
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "*" \
+            --include "*.css" \
+            --content-type "text/css; charset=utf-8" \
+            --cache-control "max-age=86400"
+
+      - name: Sync JavaScript files
+        run: |
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "*" \
+            --include "*.js" \
+            --content-type "application/javascript; charset=utf-8" \
+            --cache-control "max-age=86400"
+
+      - name: Sync image and other static files
+        run: |
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --exclude "*" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.svg" \
+            --include "*.ico" \
+            --include "*.gif" \
+            --include "*.webp" \
+            --cache-control "max-age=604800"
+
+      - name: Remove excluded files and clean up
+        run: |
+          aws s3 rm s3://${{ secrets.AWS_S3_BUCKET }}/.git --recursive || true
+          aws s3 rm s3://${{ secrets.AWS_S3_BUCKET }}/.github --recursive || true
+          aws s3 rm s3://${{ secrets.AWS_S3_BUCKET }}/.vercel --recursive || true
+          aws s3 rm s3://${{ secrets.AWS_S3_BUCKET }}/.vs --recursive || true
+
       - name: Invalidate CloudFront CDN Cache
-        if: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID != '' }}
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
-
-
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
