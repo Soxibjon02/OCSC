@@ -1,4 +1,4 @@
-﻿name: OCSC Deploy — GitHub Pages + AWS S3
+name: OCSC Deploy — GitHub Pages + AWS S3
 
 on:
   push:
@@ -15,9 +15,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify:
+    name: Code Verification (Linting & Syntax Checks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify HTML Files
+        run: |
+          npx -y htmlhint index.html
+      - name: Verify Javascript Files Syntax
+        run: |
+          node --check js/app.js
+
   deploy-github-pages:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    needs: verify
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -55,3 +73,4 @@ jobs:
         if: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID != '' }}
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
