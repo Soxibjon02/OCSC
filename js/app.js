@@ -3,6 +3,7 @@
 // Global State
 let cart = [];
 let wishlist = [];
+let currentUser = null;
 
 // Product Database
 const products = [
@@ -130,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     localStorage.setItem("ocsc_accounts", JSON.stringify(accounts));
 
-    let currentUser = null;
+    currentUser = null;
 
     // Initially hide CRM button until signed in
     crmViewBtn.style.display = "none";
@@ -226,6 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("signin-email").value = email;
     });
 
+    // Close auth modal
+    const authClose = document.getElementById("auth-close");
+    if (authClose) {
+        authClose.addEventListener("click", () => {
+            authOverlay.classList.remove("active");
+        });
+    }
+
     // Function to activate CRM view directly
     function activateCrmView() {
         const crmSection = document.getElementById("crm-section");
@@ -238,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (navMenu) navMenu.style.display = "none";
         loadCrmDashboard();
     }
+
 
 
     // 2. Scroll Header styling
@@ -557,6 +567,13 @@ function openQuickView(id) {
 
 // Add to Cart
 function addToCart(id) {
+    if (!currentUser) {
+        showToast("Xarid qilish uchun avval hisobga kiring!");
+        const authOverlay = document.getElementById("auth-overlay");
+        if (authOverlay) authOverlay.classList.add("active");
+        return;
+    }
+
     const product = products.find(p => p.id === id);
     if (!product) return;
 
@@ -573,6 +590,13 @@ function addToCart(id) {
 
 // Toggle Wishlist
 function toggleWishlist(id, btn) {
+    if (!currentUser) {
+        showToast("Sevimlilarga qo'shish uchun avval hisobga kiring!");
+        const authOverlay = document.getElementById("auth-overlay");
+        if (authOverlay) authOverlay.classList.add("active");
+        return;
+    }
+
     const idx = wishlist.indexOf(id);
     const icon = btn.querySelector("i");
     
