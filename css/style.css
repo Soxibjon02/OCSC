@@ -1605,3 +1605,187 @@ button {
         flex: 0 0 100%;
     }
 }
+
+/* ===== CRM Button ===== */
+.crm-btn {
+    background: linear-gradient(135deg, var(--accent), #b8960c);
+    color: #111;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+.crm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* ===== User Area (Sign In / Profile) ===== */
+.user-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Sign In Nav Button */
+.auth-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--accent);
+    color: #111111;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    white-space: nowrap;
+}
+.auth-nav-btn i {
+    font-size: 16px;
+}
+.auth-nav-btn:hover {
+    background: #b8960c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+/* User Profile Nav (shown after login) */
+.user-profile-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    transition: var(--transition);
+}
+.user-profile-nav:hover {
+    border-color: var(--accent);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* User Avatar Circle */
+.user-avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #b8960c);
+    color: #111;
+    font-weight: 800;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-name-nav {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Dropdown */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 230px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    z-index: 2000;
+    overflow: hidden;
+    animation: dropdownIn 0.25s ease forwards;
+}
+
+@keyframes dropdownIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.user-profile-nav.open .user-dropdown {
+    display: block;
+}
+
+.dropdown-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent);
+}
+
+.dropdown-avatar-lg {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #b8960c);
+    color: #111;
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dropdown-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+}
+
+.dropdown-email {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.dropdown-divider {
+    border: none;
+    border-top: 1px solid var(--glass-border);
+    margin: 0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e74c3c;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-align: left;
+}
+.dropdown-item:hover {
+    background: rgba(231, 76, 60, 0.08);
+}
+.dropdown-item i {
+    font-size: 16px;
+}

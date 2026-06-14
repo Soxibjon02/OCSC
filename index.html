@@ -90,8 +90,8 @@
             </ul>
 
             <div class="nav-actions">
-                <!-- CRM Toggle Button -->
-                <button class="crm-btn" id="crm-view-btn">CRM Panel</button>
+                <!-- CRM Toggle Button (shown only to admins after login) -->
+                <button class="crm-btn" id="crm-view-btn" style="display:none;">CRM Panel</button>
 
                 <!-- Search bar -->
                 <div class="search-box">
@@ -116,6 +116,33 @@
                     <span class="badge" id="cart-badge">0</span>
                 </button>
 
+                <!-- User Area: Sign In button or User Profile -->
+                <div class="user-area" id="user-area">
+                    <!-- Shown when NOT logged in -->
+                    <button class="auth-nav-btn" id="nav-signin-btn" aria-label="Sign In or Sign Up">
+                        <i class="ri-user-line"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <!-- Shown when logged in -->
+                    <div class="user-profile-nav" id="user-profile-nav" style="display:none;">
+                        <div class="user-avatar-circle" id="user-avatar-nav">U</div>
+                        <span class="user-name-nav" id="user-name-nav">User</span>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="dropdown-info">
+                                <div class="dropdown-avatar-lg" id="dropdown-avatar">U</div>
+                                <div>
+                                    <p class="dropdown-name" id="dropdown-name">User Name</p>
+                                    <p class="dropdown-email" id="dropdown-email">user@mail.com</p>
+                                </div>
+                            </div>
+                            <hr class="dropdown-divider">
+                            <button class="dropdown-item" id="dropdown-signout">
+                                <i class="ri-logout-box-line"></i> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Mobile menu burger -->
                 <div class="hamburger" id="hamburger" aria-label="Toggle Menu">
                     <span></span>
@@ -125,6 +152,7 @@
             </div>
         </div>
     </header>
+
 
     <!-- Hero Section -->
     <section class="hero">

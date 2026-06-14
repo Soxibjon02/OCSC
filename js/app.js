@@ -136,6 +136,49 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initially hide CRM button until signed in
     crmViewBtn.style.display = "none";
 
+    // Nav Sign In Button -> Open Auth Modal
+    const navSigninBtn = document.getElementById("nav-signin-btn");
+    if (navSigninBtn) {
+        navSigninBtn.addEventListener("click", () => {
+            authOverlay.classList.add("active");
+            showSignIn();
+        });
+    }
+
+    // User Profile Dropdown Toggle
+    const userProfileNav = document.getElementById("user-profile-nav");
+    if (userProfileNav) {
+        userProfileNav.addEventListener("click", (e) => {
+            e.stopPropagation();
+            userProfileNav.classList.toggle("open");
+        });
+        document.addEventListener("click", () => {
+            userProfileNav.classList.remove("open");
+        });
+    }
+
+    // Sign Out Button
+    const dropdownSignout = document.getElementById("dropdown-signout");
+    if (dropdownSignout) {
+        dropdownSignout.addEventListener("click", () => {
+            currentUser = null;
+            // Reset UI
+            document.getElementById("nav-signin-btn").style.display = "flex";
+            document.getElementById("user-profile-nav").style.display = "none";
+            crmViewBtn.style.display = "none";
+            // If CRM is active, switch back to store
+            if (isCrmActive) {
+                isCrmActive = false;
+                crmViewBtn.innerText = "CRM Panel";
+                document.getElementById("crm-section").classList.remove("active");
+                document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "block");
+                const navMenu = document.getElementById("nav-menu");
+                if (navMenu) navMenu.style.display = "flex";
+            }
+            showToast("Tizimdan muvaffaqiyatli chiqdingiz!");
+        });
+    }
+
     // Switch between Tabs
     const showSignIn = () => {
         tabSignin.classList.add("active");
@@ -182,6 +225,26 @@ document.addEventListener("DOMContentLoaded", () => {
         currentUser = account;
         authOverlay.classList.remove("active");
         showToast(`Xush kelibsiz, ${account.name}!`);
+
+        // Update Navbar: hide Sign In btn, show user profile
+        const navSigninBtnEl = document.getElementById("nav-signin-btn");
+        const userProfileNavEl = document.getElementById("user-profile-nav");
+        if (navSigninBtnEl) navSigninBtnEl.style.display = "none";
+        if (userProfileNavEl) {
+            userProfileNavEl.style.display = "flex";
+            // Set avatar initial and name
+            const initial = account.name.charAt(0).toUpperCase();
+            const avatarEl = document.getElementById("user-avatar-nav");
+            const dropAvatar = document.getElementById("dropdown-avatar");
+            const dropName = document.getElementById("dropdown-name");
+            const dropEmail = document.getElementById("dropdown-email");
+            const userNameEl = document.getElementById("user-name-nav");
+            if (avatarEl) avatarEl.textContent = initial;
+            if (dropAvatar) dropAvatar.textContent = initial;
+            if (dropName) dropName.textContent = account.name;
+            if (dropEmail) dropEmail.textContent = account.email;
+            if (userNameEl) userNameEl.textContent = account.name.split(" ")[0];
+        }
 
         if (isAdmin) {
             // Logged in as Admin: show CRM button & redirect automatically to CRM View
@@ -301,12 +364,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Add to Cart
         if (target.closest(".add-to-cart-btn")) {
+            if (!currentUser) {
+                authOverlay.classList.add("active");
+                showSignIn();
+                showToast("Savatchaga qo\'shish uchun tizimga kiring!");
+                return;
+            }
             const id = target.closest(".add-to-cart-btn").dataset.id;
             addToCart(parseInt(id));
         }
 
         // Wishlist
         if (target.closest(".wishlist-btn")) {
+            if (!currentUser) {
+                authOverlay.classList.add("active");
+                showSignIn();
+                showToast("Like bosish uchun tizimga kiring!");
+                return;
+            }
             const id = target.closest(".wishlist-btn").dataset.id;
             toggleWishlist(parseInt(id), target.closest(".wishlist-btn"));
         }
@@ -333,6 +408,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartOverlay = document.getElementById("cart-overlay");
 
     cartToggle.addEventListener("click", () => {
+        if (!currentUser) {
+            authOverlay.classList.add("active");
+            showSignIn();
+            showToast("Savatchani ko\'rish uchun tizimga kiring!");
+            return;
+        }
         cartSidebar.classList.add("active");
         cartOverlay.classList.add("active");
     });
