@@ -108,12 +108,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const authSwitchText = document.getElementById("auth-switch-text");
     const crmViewBtn = document.getElementById("crm-view-btn");
 
-    // Default In-Memory Accounts list
-    let accounts = JSON.parse(localStorage.getItem("ocsc_accounts")) || [
+    // Predefined admin emails
+    const adminEmails = ["admin@ocsc.com", "soxibjon@ocsc.com"];
+
+    // Default In-Memory Accounts list (always ensure admin credentials exist)
+    let accounts = JSON.parse(localStorage.getItem("ocsc_accounts")) || [];
+    
+    // Ensure the predefined admins are always in the account list with correct password
+    const defaultAdmins = [
         { name: "Administrator", email: "admin@ocsc.com", password: "admin", isAdmin: true },
-        { name: "Soxibjon", email: "soxibjon@ocsc.com", password: "admin", isAdmin: true },
-        { name: "Customer User", email: "customer@mail.com", password: "user123", isAdmin: false }
+        { name: "Soxibjon", email: "soxibjon@ocsc.com", password: "admin", isAdmin: true }
     ];
+
+    defaultAdmins.forEach(defaultAdmin => {
+        const index = accounts.findIndex(acc => acc.email === defaultAdmin.email);
+        if (index > -1) {
+            accounts[index].isAdmin = true; // Force admin state
+        } else {
+            accounts.push(defaultAdmin);
+        }
+    });
     localStorage.setItem("ocsc_accounts", JSON.stringify(accounts));
 
     let currentUser = null;
@@ -151,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const email = document.getElementById("signin-email").value.trim().toLowerCase();
         const password = document.getElementById("signin-password").value;
-        const asAdmin = document.getElementById("signin-as-admin").checked;
 
         // Search for account
         const account = accounts.find(acc => acc.email === email && acc.password === password);
@@ -161,16 +174,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (asAdmin && !account.isAdmin) {
-            showToast("Ushbu hisob admin huquqiga ega emas!");
-            return;
-        }
+        // Determine if account is an admin
+        const isAdmin = adminEmails.includes(account.email);
+        account.isAdmin = isAdmin;
 
         currentUser = account;
         authOverlay.classList.remove("active");
         showToast(`Xush kelibsiz, ${account.name}!`);
 
-        if (account.isAdmin) {
+        if (isAdmin) {
             // Logged in as Admin: show CRM button & redirect automatically to CRM View
             crmViewBtn.style.display = "block";
             activateCrmView();
@@ -186,10 +198,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("signup-name").value.trim();
         const email = document.getElementById("signup-email").value.trim().toLowerCase();
         const password = document.getElementById("signup-password").value;
-        const asAdmin = document.getElementById("signup-as-admin").checked;
 
         if (name === "" || email === "" || password === "") {
             showToast("Barcha maydonlarni to'ldiring!");
+            return;
+        }
+
+        // Admin registration blocked via Sign Up
+        if (adminEmails.includes(email)) {
+            showToast("Ushbu email bilan ro'yxatdan o'tish taqiqlangan!");
             return;
         }
 
@@ -198,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const newAccount = { name, email, password, isAdmin: asAdmin };
+        const newAccount = { name, email, password, isAdmin: false };
         accounts.push(newAccount);
         localStorage.setItem("ocsc_accounts", JSON.stringify(accounts));
 
