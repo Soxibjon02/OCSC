@@ -90,13 +90,138 @@ const products = [
 
 // Initialize DOM Events
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Loading screen
+    // 1. Loading screen & Auth Initial Setup
     setTimeout(() => {
         const loader = document.getElementById("loader");
         if (loader) {
             loader.classList.add("fade-out");
         }
     }, 1200);
+
+    // --- Authentication Logic ---
+    const authOverlay = document.getElementById("auth-overlay");
+    const tabSignin = document.getElementById("tab-signin");
+    const tabSignup = document.getElementById("tab-signup");
+    const signinForm = document.getElementById("signin-form");
+    const signupForm = document.getElementById("signup-form");
+    const authSwitchBtn = document.getElementById("auth-switch-btn");
+    const authSwitchText = document.getElementById("auth-switch-text");
+    const crmViewBtn = document.getElementById("crm-view-btn");
+
+    // Default In-Memory Accounts list
+    let accounts = JSON.parse(localStorage.getItem("ocsc_accounts")) || [
+        { name: "Administrator", email: "admin@ocsc.com", password: "admin", isAdmin: true },
+        { name: "Soxibjon", email: "soxibjon@ocsc.com", password: "admin", isAdmin: true },
+        { name: "Customer User", email: "customer@mail.com", password: "user123", isAdmin: false }
+    ];
+    localStorage.setItem("ocsc_accounts", JSON.stringify(accounts));
+
+    let currentUser = null;
+
+    // Initially hide CRM button until signed in
+    crmViewBtn.style.display = "none";
+
+    // Switch between Tabs
+    const showSignIn = () => {
+        tabSignin.classList.add("active");
+        tabSignup.classList.remove("active");
+        signinForm.classList.add("active");
+        signupForm.classList.remove("active");
+        authSwitchText.innerHTML = `Don't have an account? <span id="auth-switch-btn">Sign Up</span>`;
+        document.getElementById("auth-switch-btn").addEventListener("click", showSignUp);
+    };
+
+    const showSignUp = () => {
+        tabSignin.classList.remove("active");
+        tabSignup.classList.add("active");
+        signinForm.classList.remove("active");
+        signupForm.classList.add("active");
+        authSwitchText.innerHTML = `Already have an account? <span id="auth-switch-btn">Sign In</span>`;
+        document.getElementById("auth-switch-btn").addEventListener("click", showSignIn);
+    };
+
+    tabSignin.addEventListener("click", showSignIn);
+    tabSignup.addEventListener("click", showSignUp);
+    if (authSwitchBtn) {
+        authSwitchBtn.addEventListener("click", showSignUp);
+    }
+
+    // Sign In Submission
+    signinForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("signin-email").value.trim().toLowerCase();
+        const password = document.getElementById("signin-password").value;
+        const asAdmin = document.getElementById("signin-as-admin").checked;
+
+        // Search for account
+        const account = accounts.find(acc => acc.email === email && acc.password === password);
+
+        if (!account) {
+            showToast("Noto'g'ri email yoki parol!");
+            return;
+        }
+
+        if (asAdmin && !account.isAdmin) {
+            showToast("Ushbu hisob admin huquqiga ega emas!");
+            return;
+        }
+
+        currentUser = account;
+        authOverlay.classList.remove("active");
+        showToast(`Xush kelibsiz, ${account.name}!`);
+
+        if (account.isAdmin) {
+            // Logged in as Admin: show CRM button & redirect automatically to CRM View
+            crmViewBtn.style.display = "block";
+            activateCrmView();
+        } else {
+            // Logged in as Customer: ensure CRM button is hidden
+            crmViewBtn.style.display = "none";
+        }
+    });
+
+    // Sign Up Submission
+    signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("signup-name").value.trim();
+        const email = document.getElementById("signup-email").value.trim().toLowerCase();
+        const password = document.getElementById("signup-password").value;
+        const asAdmin = document.getElementById("signup-as-admin").checked;
+
+        if (name === "" || email === "" || password === "") {
+            showToast("Barcha maydonlarni to'ldiring!");
+            return;
+        }
+
+        if (accounts.some(acc => acc.email === email)) {
+            showToast("Bu email allaqachon ro'yxatdan o'tgan!");
+            return;
+        }
+
+        const newAccount = { name, email, password, isAdmin: asAdmin };
+        accounts.push(newAccount);
+        localStorage.setItem("ocsc_accounts", JSON.stringify(accounts));
+
+        showToast("Hisob yaratildi! Tizimga kiring.");
+        showSignIn();
+        
+        // Auto fill email to ease login
+        document.getElementById("signin-email").value = email;
+    });
+
+    // Function to activate CRM view directly
+    function activateCrmView() {
+        const crmSection = document.getElementById("crm-section");
+        crmViewBtn.innerText = "Store View";
+        crmSection.classList.add("active");
+        isCrmActive = true;
+        // Hide storefront
+        document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "none");
+        const navMenu = document.getElementById("nav-menu");
+        if (navMenu) navMenu.style.display = "none";
+        loadCrmDashboard();
+    }
+
 
     // 2. Scroll Header styling
     window.addEventListener("scroll", () => {
@@ -238,21 +363,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 13. CRM Toggling & Setup
-    const crmViewBtn = document.getElementById("crm-view-btn");
     const crmSection = document.getElementById("crm-section");
     const storeSections = ["hero", "categories", "trending", "new-arrivals", "best-sellers", "sale"];
     let isCrmActive = false;
 
     crmViewBtn.addEventListener("click", () => {
-        if (!isCrmActive) {
-            // CRM Authentication
-            const password = prompt("Iltimos, CRM panelga kirish parolini kiriting:");
-            if (password !== "admin123") {
-                showToast("Xato parol! CRM panelga kirish taqiqlandi.");
-                return;
-            }
-        }
-
         isCrmActive = !isCrmActive;
         if (isCrmActive) {
             crmViewBtn.innerText = "Store View";

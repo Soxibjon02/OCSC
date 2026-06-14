@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Online Clothes Shopping Center (OCSC) - Experience premium luxury fashion for men, women, and kids with modern, minimalist, and elegant apparel collection.">
     <meta name="keywords" content="OCSC, online clothes shopping center, luxury fashion, minimalist clothing, premium clothing store">
-    <title>OCSC - Online Clothes Shopping Center | Premium Fashion Store</title>
+    <title>OCSC - Premium Fashion Store</title>
     
     <!-- Remix Icon Library -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -22,6 +22,63 @@
         <div class="loader-logo">OCSC<span>.</span></div>
         <div class="loader-line">
             <div class="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Sign In / Sign Up Overlay) -->
+    <div class="auth-overlay active" id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">OCSC<span>.</span></div>
+                <p class="auth-subtitle">Experience Premium Luxury Fashion</p>
+            </div>
+            
+            <!-- Auth Tab Buttons -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-signin">Sign In</button>
+                <button class="auth-tab" id="tab-signup">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form active">
+                <div class="crm-form-group">
+                    <label for="signin-email">Email Address</label>
+                    <input type="email" id="signin-email" required placeholder="e.g. admin@ocsc.com or customer@mail.com">
+                </div>
+                <div class="crm-form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required placeholder="••••••••">
+                </div>
+                <div class="crm-form-group checkbox-group">
+                    <input type="checkbox" id="signin-as-admin">
+                    <label for="signin-as-admin" class="checkbox-label">Sign in as Administrator</label>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit-btn">Sign In</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form">
+                <div class="crm-form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="John Doe">
+                </div>
+                <div class="crm-form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" placeholder="john@example.com">
+                </div>
+                <div class="crm-form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Min. 8 characters">
+                </div>
+                <div class="crm-form-group checkbox-group">
+                    <input type="checkbox" id="signup-as-admin">
+                    <label for="signup-as-admin" class="checkbox-label">Register as Administrator</label>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit-btn">Create Account</button>
+            </form>
+            <div class="auth-footer">
+                <p id="auth-switch-text">Don't have an account? <span id="auth-switch-btn">Sign Up</span></p>
+            </div>
         </div>
     </div>
 
