@@ -843,11 +843,11 @@ window.deactivateCrmView = function() {
     // Show standard storefront headers, footers and restore all section displays
     const header = document.querySelector("header.header");
     if (header) {
-        header.style.display = "block";
+        header.style.removeProperty("display");
     }
     const footer = document.querySelector("footer.footer");
     if (footer) {
-        footer.style.display = "block";
+        footer.style.removeProperty("display");
     }
     
     document.querySelectorAll("section:not(.crm-section)").forEach(sec => {
