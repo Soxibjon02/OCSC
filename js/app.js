@@ -801,83 +801,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Override active view activator
 window.activateCrmView = function() {
+    // Add class to body - CSS handles footer hiding via body.crm-active
     document.body.classList.add("crm-active");
-
-    // Hide store header (fixed, so must force hide)
-    const header = document.querySelector("header.header");
-    if (header) {
-        header.setAttribute("data-hidden-by-crm", "1");
-        header.style.cssText += "; display: none !important;";
-    }
-
-    // Hide store footer
-    const footer = document.querySelector("footer.footer");
-    if (footer) {
-        footer.setAttribute("data-hidden-by-crm", "1");
-        footer.style.cssText += "; display: none !important;";
-    }
-
-    // Hide all store sections
-    document.querySelectorAll("section:not(#crm-section)").forEach(sec => {
-        sec.style.setProperty("display", "none", "important");
-    });
 
     // Show CRM section
     const crmSec = document.getElementById("crm-section");
     if (crmSec) {
         crmSec.classList.add("active");
-        crmSec.style.removeProperty("display");
     }
 
-    // Scroll to top so CRM starts from top
+    // Hide all store sections (but NOT the header - it stays visible with Store View button)
+    document.querySelectorAll("section:not(#crm-section)").forEach(function(sec) {
+        sec.style.display = "none";
+    });
+
+    // Update CRM button text to "Store View"
+    const crmViewBtn = document.getElementById("crm-view-btn");
+    if (crmViewBtn) {
+        crmViewBtn.innerText = "Store View";
+    }
+
+    // Scroll to top
     window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
 
     // Load Dashboard Tab
-    switchCrmTab('dashboard');
+    switchCrmTab("dashboard");
 };
 
 window.deactivateCrmView = function() {
+    // Remove body class - CSS stops hiding footer
     document.body.classList.remove("crm-active");
-    document.body.style.overflow = "";
 
     // Hide CRM section
     const crmSec = document.getElementById("crm-section");
     if (crmSec) {
         crmSec.classList.remove("active");
-        crmSec.style.setProperty("display", "none", "important");
-    }
-
-    // Restore store header
-    const header = document.querySelector("header.header");
-    if (header) {
-        header.removeAttribute("data-hidden-by-crm");
-        header.style.cssText = header.style.cssText.replace(/display\s*:\s*none\s*!important\s*;?/gi, "").trim();
-        header.style.display = "";
-    }
-
-    // Restore store footer
-    const footer = document.querySelector("footer.footer");
-    if (footer) {
-        footer.removeAttribute("data-hidden-by-crm");
-        footer.style.cssText = footer.style.cssText.replace(/display\s*:\s*none\s*!important\s*;?/gi, "").trim();
-        footer.style.display = "";
     }
 
     // Restore all store sections
-    document.querySelectorAll("section:not(#crm-section)").forEach(sec => {
+    document.querySelectorAll("section:not(#crm-section)").forEach(function(sec) {
         sec.style.removeProperty("display");
     });
 
+    // Update button back to "CRM Panel"
     const crmViewBtn = document.getElementById("crm-view-btn");
     if (crmViewBtn) {
         crmViewBtn.innerText = "CRM Panel";
         crmViewBtn.style.display = "block";
     }
 
+    // Scroll to top
     window.scrollTo(0, 0);
+
     showToast("Returned to Customer Storefront");
 };
+
 window.switchCrmTab = function(tabName) {
     activeCrmTab = tabName;
     
