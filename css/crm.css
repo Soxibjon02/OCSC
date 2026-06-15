@@ -17,12 +17,19 @@
 
 /* CRM Section Container Override */
 .crm-section {
-    display: none;
+    display: none !important;
     padding: 0 !important;
+    margin: 0 !important;
     background-color: var(--crm-bg-main) !important;
     color: var(--crm-text-primary) !important;
     font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
     min-height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
