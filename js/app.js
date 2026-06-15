@@ -757,152 +757,607 @@ window.removeCartItem = function(id) {
     showToast("Item removed from bag");
 };
 
-// CRM Dashboard Initial Dummy Orders
+// CRM Dashboard Premium Logic
 let crmOrders = [
-    { id: "1092", customer: "Sarah Jenkins", items: "1x Classic Trench Coat", total: 189.00, status: "completed" },
-    { id: "1093", customer: "David Miller", items: "1x Tailored Wool Suit", total: 450.00, status: "processing" },
-    { id: "1094", customer: "Elena Rostova", items: "1x Minimalist Linen Blazer", total: 129.00, status: "pending" },
-    { id: "1095", customer: "Marcus Aurelius", items: "2x Gold Anchor Cufflinks", total: 150.00, status: "completed" },
-    { id: "1096", customer: "Sophia Loren", items: "1x Premium Leather Handbag", total: 299.00, status: "completed" },
-    { id: "1097", customer: "Lucas H.", items: "1x Kids Cashmere Sweater", total: 89.00, status: "pending" }
+    { id: "5", customer: "Denise Foley", date: "2026-06-14 09:32", total: 1450000, status: "KUTILMOQDA", items: "Slim Fit Djinsi Shim (30/Moviy) (1 ta), Trikotaj Erkaklar T-Shirt (S/Oq) (1 ta)" },
+    { id: "4", customer: "Test User One", date: "2026-06-14 08:15", total: 1200000, status: "YETKAZILDI", items: "Kostyum (L/Qora) (1 ta)" },
+    { id: "3", customer: "Kylan Carrillo", date: "2026-06-14 08:09", total: 150000, status: "YETKAZILDI", items: "Trikotaj Erkaklar T-Shirt (S/Oq) (1 ta)" },
+    { id: "2", customer: "Kylan Carrillo", date: "2026-06-14 08:09", total: 500000, status: "KUTILMOQDA", items: "Slim Fit Djinsi Shim (30/Moviy) (1 ta)" },
+    { id: "1", customer: "Dina Karimova", date: "2026-06-14 08:09", total: 1200000, status: "KUTILMOQDA", items: "Kostyum (L/Qora) (1 ta)" }
 ];
 
-// Load and Render OCSC CRM Data
-function loadCrmDashboard() {
-    // 1. Calculate and update stats counters
-    const totalRev = crmOrders.reduce((sum, ord) => sum + ord.total, 0);
-    document.getElementById("crm-revenue").innerText = `$${totalRev.toFixed(2)}`;
-    document.getElementById("crm-orders").innerText = crmOrders.length;
-    document.getElementById("crm-products-count").innerText = products.length;
+let crmCustomers = [
+    { id: "7", name: "Denise Foley", phone: "+998990001122", email: "cofaculyx@shopco.com", totalBought: 1450000, ordersCount: 1 },
+    { id: "6", name: "Test User One", phone: "+998990001122", email: "test1@shopco.com", totalBought: 1200000, ordersCount: 1 },
+    { id: "5", name: "Kylan Carrillo", phone: "+998990001122", email: "cyvuzidime@shopco.com", totalBought: 650000, ordersCount: 2 },
+    { id: "4", name: "Lois Fitzpatrick", phone: "+998990001122", email: "dupeq@shopco.com", totalBought: 0, ordersCount: 0 },
+    { id: "3", name: "Anvar Sadullayev", phone: "+998901234567", email: "anvar@gmail.com", totalBought: 1550000, ordersCount: 1 },
+    { id: "2", name: "Jasur Alimov", phone: "+998977778899", email: "jasur@alimov.uz", totalBought: 0, ordersCount: 0 },
+    { id: "1", name: "Dina Karimova", phone: "+998935552211", email: "dina@mail.ru", totalBought: 1650000, ordersCount: 1 }
+];
 
-    // 2. Render Orders Table
-    const ordersTbody = document.getElementById("crm-orders-list");
-    ordersTbody.innerHTML = crmOrders.map(order => `
-        <tr>
-            <td>#${order.id}</td>
-            <td><strong>${order.customer}</strong></td>
-            <td>${order.items}</td>
-            <td>$${order.total.toFixed(2)}</td>
-            <td><span class="status-badge ${order.status}">${order.status}</span></td>
-            <td>
-                <div class="crm-actions-cell">
-                    <button class="crm-action-btn" onclick="updateOrderStatus('${order.id}', 'completed')">Complete</button>
-                    <button class="crm-action-btn delete" onclick="deleteCrmOrder('${order.id}')">Delete</button>
-                </div>
-            </td>
-        </tr>
-    `).join("");
+// CRM active tab state
+let activeCrmTab = 'dashboard';
 
-    // 3. Render Products List Table
-    const productsTbody = document.getElementById("crm-products-list");
-    productsTbody.innerHTML = products.map(prod => `
-        <tr>
-            <td>${prod.id}</td>
-            <td>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <img src="${prod.image}" style="width:35px; height:35px; object-fit:cover;">
-                    <strong>${prod.title}</strong>
-                </div>
-            </td>
-            <td>${prod.category}</td>
-            <td>$${prod.price.toFixed(2)}</td>
-            <td>★ ${prod.rating.toFixed(1)}</td>
-            <td>
-                <div class="crm-actions-cell">
-                    <button class="crm-action-btn" onclick="editCrmProduct(${prod.id})">Edit</button>
-                    <button class="crm-action-btn delete" onclick="deleteCrmProduct(${prod.id})">Delete</button>
-                </div>
-            </td>
-        </tr>
-    `).join("");
-}
+// Charts variables
+let salesLineChartInstance = null;
+let categoryDoughnutChartInstance = null;
+let annualSalesBarChartInstance = null;
 
-// Update CRM Order Status
-window.updateOrderStatus = function(orderId, newStatus) {
-    const order = crmOrders.find(ord => ord.id === orderId);
-    if (order) {
-        order.status = newStatus;
+// Initialize CRM event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    // Tab switching event listeners
+    const navItems = document.querySelectorAll(".crm-sidebar .nav-item");
+    navItems.forEach(item => {
+        item.addEventListener("click", () => {
+            navItems.forEach(n => n.classList.remove("active"));
+            item.classList.add("active");
+            const target = item.getAttribute("data-target");
+            switchCrmTab(target);
+        });
+    });
+
+    // Search events
+    document.getElementById("search-products-input")?.addEventListener("input", (e) => {
+        renderCrmProducts(e.target.value, document.getElementById("filter-category-select").value);
+    });
+
+    document.getElementById("filter-category-select")?.addEventListener("change", (e) => {
+        renderCrmProducts(document.getElementById("search-products-input").value, e.target.value);
+    });
+
+    document.getElementById("search-orders-input")?.addEventListener("input", (e) => {
+        renderCrmOrders(e.target.value);
+    });
+
+    document.getElementById("search-customers-input")?.addEventListener("input", (e) => {
+        renderCrmCustomers(e.target.value);
+    });
+});
+
+// Override active view activator
+window.activateCrmView = function() {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    const crmSec = document.getElementById("crm-section");
+    if (crmSec) {
+        crmSec.classList.add("active");
+        crmSec.style.display = "block";
+    }
+    
+    // Hide default header, hero and footer elements if any
+    const header = document.querySelector("header.header");
+    if (header) header.style.display = "none";
+    const footer = document.querySelector("footer.footer");
+    if (footer) footer.style.display = "none";
+    const hero = document.querySelector("section.hero");
+    if (hero) hero.style.display = "none";
+    const categories = document.querySelector("section.categories");
+    if (categories) categories.style.display = "none";
+    const trending = document.querySelector("section#trending");
+    if (trending) trending.style.display = "none";
+    const newArrivals = document.querySelector("section#new-arrivals");
+    if (newArrivals) newArrivals.style.display = "none";
+    const newsletter = document.querySelector("section.newsletter");
+    if (newsletter) newsletter.style.display = "none";
+
+    // Load Dashboard
+    switchCrmTab('dashboard');
+};
+
+// Switch active CRM tabs
+window.switchCrmTab = function(tabName) {
+    activeCrmTab = tabName;
+    
+    // Switch active nav item highlight
+    const navItems = document.querySelectorAll(".crm-sidebar .nav-item");
+    navItems.forEach(item => {
+        if (item.getAttribute("data-target") === tabName) {
+            item.classList.add("active");
+        } else {
+            item.classList.remove("active");
+        }
+    });
+
+    // Update headers text
+    const titleEl = document.getElementById("crm-page-title");
+    const subEl = document.getElementById("crm-page-subtitle");
+    
+    const titles = {
+        'dashboard': ['Boshqaruv Paneli', 'Do\'koningizdagi umumiy holat va ko\'rsatkichlar'],
+        'mahsulotlar': ['Mahsulotlar Ombori', 'Kiyimlar ro\'yxati va inventarni boshqarish'],
+        'buyurtmalar': ['Buyurtmalar Jurnali', 'Mijozlar buyurtmalarini boshqarish va nazorat qilish'],
+        'mijozlar': ['Mijozlar Bazasi', 'Sodiq mijozlar va aloqa ma\'lumotlari'],
+        'hisobotlar': ['Analitika va Hisobotlar', 'Savdo ko\'rsatkichlari bo\'yicha chuqur tahlillar'],
+        'kuponlar': ['Chegirma Kuponlari', 'Aktiv promo-kodlar va kuponlar ro\'yxati'],
+        'xodimlar': ['Xodimlar Boshqaruvi', 'Tizim foydalanuvchilari va rollari'],
+        'profil': ['Foydalanuvchi Profili', 'Hisob ma\'lumotlari va sozlamalari']
+    };
+
+    if (titles[tabName]) {
+        titleEl.innerText = titles[tabName][0];
+        subEl.innerText = titles[tabName][1];
+    }
+
+    // Switch visible panes
+    document.querySelectorAll(".crm-tab-pane").forEach(pane => {
+        pane.classList.remove("active");
+    });
+    const targetPane = document.getElementById(`tab-${tabName}`);
+    if (targetPane) targetPane.classList.add("active");
+
+    // Load tab specific data
+    if (tabName === 'dashboard') {
         loadCrmDashboard();
-        showToast(`Order #${orderId} marked as ${newStatus}`);
+    } else if (tabName === 'mahsulotlar') {
+        renderCrmProducts();
+    } else if (tabName === 'buyurtmalar') {
+        renderCrmOrders();
+    } else if (tabName === 'mijozlar') {
+        renderCrmCustomers();
+    } else if (tabName === 'hisobotlar') {
+        initHisobotlarCharts();
     }
 };
 
-// Delete CRM Order
-window.deleteCrmOrder = function(orderId) {
-    crmOrders = crmOrders.filter(ord => ord.id !== orderId);
-    loadCrmDashboard();
-    showToast(`Order #${orderId} deleted`);
+// Calculate and load dashboard stats and charts
+window.loadCrmDashboard = function() {
+    // 1. Calculate general stats
+    const totalRev = crmOrders.reduce((sum, o) => sum + o.total, 0);
+    const lowStockCount = products.filter(p => (p.stock || 0) < 5).length;
+
+    document.getElementById("stat-revenue").innerText = totalRev.toLocaleString('uz-UZ') + " UZS";
+    document.getElementById("stat-orders").innerText = crmOrders.length + " ta";
+    document.getElementById("stat-customers").innerText = crmCustomers.length + " ta";
+    document.getElementById("stat-low-stock").innerText = lowStockCount + " ta";
+
+    // 2. Render recent orders table
+    const recentTbody = document.getElementById("dashboard-recent-orders");
+    if (recentTbody) {
+        recentTbody.innerHTML = crmOrders.slice(0, 5).map(o => `
+            <tr>
+                <td>#${o.id}</td>
+                <td><strong>${o.customer}</strong></td>
+                <td>${o.date}</td>
+                <td>${o.total.toLocaleString('uz-UZ')} UZS</td>
+                <td><span class="status-badge ${o.status.toLowerCase()}">${o.status}</span></td>
+            </tr>
+        `).join("");
+    }
+
+    // 3. Initialize charts
+    initDashboardCharts();
 };
 
-// Edit Existing Product inside CRM Form
-window.editCrmProduct = function(id) {
-    const prod = products.find(p => p.id === id);
-    if (!prod) return;
+function initDashboardCharts() {
+    // Line Chart
+    const lineCtx = document.getElementById('salesLineChart')?.getContext('2d');
+    if (lineCtx) {
+        if (salesLineChartInstance) salesLineChartInstance.destroy();
+        
+        salesLineChartInstance = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'],
+                datasets: [{
+                    label: 'Savdo hajmi (UZS)',
+                    data: [1200000, 1800000, 3000000, 4800000, 2300000, 4900000, 3500000],
+                    borderColor: '#e2b73c',
+                    backgroundColor: 'rgba(226, 183, 60, 0.05)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#e2b73c'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#1f2a3c' },
+                        ticks: { color: '#9aa8bc' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9aa8bc' }
+                    }
+                }
+            }
+        });
+    }
 
-    document.getElementById("edit-product-id").value = prod.id;
-    document.getElementById("prod-name").value = prod.title;
-    document.getElementById("prod-category").value = prod.category;
-    document.getElementById("prod-price").value = prod.price;
-    document.getElementById("prod-desc").value = prod.description;
+    // Doughnut Chart
+    const doughnutCtx = document.getElementById('categoryDoughnutChart')?.getContext('2d');
+    if (doughnutCtx) {
+        if (categoryDoughnutChartInstance) categoryDoughnutChartInstance.destroy();
 
-    document.getElementById("form-action-title").innerText = `Edit Product #${prod.id}`;
-    showToast(`Loaded ${prod.title} details for editing`);
+        categoryDoughnutChartInstance = new Chart(doughnutCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Futbolkalar', 'Kostyumlar', 'Kurtkalar', 'Poyabzallar', 'Shimlar'],
+                datasets: [{
+                    data: [20, 15, 12, 18, 35],
+                    backgroundColor: [
+                        '#e2b73c',
+                        '#3b82f6',
+                        '#10b981',
+                        '#ef4444',
+                        '#8b5cf6'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#131924'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#9aa8bc', font: { size: 11 } }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+    }
+}
+
+function initHisobotlarCharts() {
+    const barCtx = document.getElementById('annualSalesBarChart')?.getContext('2d');
+    if (barCtx) {
+        if (annualSalesBarChartInstance) annualSalesBarChartInstance.destroy();
+
+        annualSalesBarChartInstance = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'],
+                datasets: [{
+                    label: 'Oylik daromad (UZS)',
+                    data: [12000000, 15000000, 18000000, 23000000, 31000000, 4000000, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: '#e2b73c',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#1f2a3c' },
+                        ticks: { color: '#9aa8bc' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9aa8bc' }
+                    }
+                }
+            }
+        });
+    }
+}
+
+// Render Products Tab Grid
+window.renderCrmProducts = function(searchQuery = '', categoryFilter = 'all') {
+    const container = document.getElementById("crm-products-grid-container");
+    if (!container) return;
+
+    let filtered = products;
+    if (searchQuery) {
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    if (categoryFilter !== 'all') {
+        filtered = filtered.filter(p => p.category === categoryFilter);
+    }
+
+    container.innerHTML = filtered.map(p => {
+        // Ensure standard stock counts if undefined
+        const stockCount = p.stock !== undefined ? p.stock : 15;
+        const formattedPrice = (p.price * 10000).toLocaleString('uz-UZ') + " UZS"; // Adjust UZS prices
+
+        return `
+            <div class="crm-product-card">
+                <div class="product-image-container">
+                    <img src="${p.image}" alt="${p.title}">
+                    <span class="category-tag">${p.category}</span>
+                    <span class="stock-tag">Omborda: ${stockCount} ta</span>
+                </div>
+                <div class="product-card-body">
+                    <h4>${p.title}</h4>
+                    <div class="product-card-price">${formattedPrice}</div>
+                </div>
+                <div class="product-card-footer">
+                    <button class="btn-edit" onclick="editProduct(${p.id})">
+                        <i class="ri-edit-line"></i> Tahrirlash
+                    </button>
+                    <button class="btn-delete" onclick="deleteProduct(${p.id})" title="O'chirish">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join("");
 };
 
-// Save Product Details
-function saveCrmProduct() {
-    const idVal = document.getElementById("edit-product-id").value;
-    const name = document.getElementById("prod-name").value;
-    const category = document.getElementById("prod-category").value;
-    const price = parseFloat(document.getElementById("prod-price").value);
-    const desc = document.getElementById("prod-desc").value;
+// Render Orders Tab List
+window.renderCrmOrders = function(searchQuery = '') {
+    const tbody = document.getElementById("orders-list-table");
+    if (!tbody) return;
+
+    let filtered = crmOrders;
+    if (searchQuery) {
+        filtered = filtered.filter(o => o.customer.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    tbody.innerHTML = filtered.map(o => `
+        <tr>
+            <td>#${o.id}</td>
+            <td><strong>${o.customer}</strong></td>
+            <td>${o.date}</td>
+            <td>${o.total.toLocaleString('uz-UZ')} UZS</td>
+            <td>
+                <select onchange="updateCrmOrderStatus('${o.id}', this.value)" class="status-badge ${o.status.toLowerCase()}">
+                    <option value="KUTILMOQDA" ${o.status === 'KUTILMOQDA' ? 'selected' : ''}>KUTILMOQDA</option>
+                    <option value="YETKAZILDI" ${o.status === 'YETKAZILDI' ? 'selected' : ''}>YETKAZILDI</option>
+                </select>
+            </td>
+            <td><div style="max-width: 250px; font-size:12px; color:var(--crm-text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${o.items}</div></td>
+            <td>
+                <button class="btn btn-secondary" onclick="printReceipt('${o.id}')" style="padding: 6px 12px; font-size:12px;">
+                    <i class="ri-printer-line"></i> Kvitansiya
+                </button>
+            </td>
+        </tr>
+    `).join("");
+};
+
+// Render Customers Tab List
+window.renderCrmCustomers = function(searchQuery = '') {
+    const tbody = document.getElementById("customers-list-table");
+    if (!tbody) return;
+
+    let filtered = crmCustomers;
+    if (searchQuery) {
+        filtered = filtered.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    tbody.innerHTML = filtered.map(c => `
+        <tr>
+            <td>#${c.id}</td>
+            <td><strong>${c.name}</strong></td>
+            <td>${c.phone}</td>
+            <td>${c.email}</td>
+            <td>${c.totalBought.toLocaleString('uz-UZ')} UZS</td>
+            <td>${c.ordersCount} ta</td>
+        </tr>
+    `).join("");
+};
+
+// Product Modal controls
+window.openAddProductModal = function() {
+    document.getElementById("crm-product-editor-form").reset();
+    document.getElementById("edit-prod-id").value = "";
+    document.getElementById("product-modal-title").innerText = "Yangi mahsulot qo'shish";
+    document.getElementById("crm-product-modal").classList.add("active");
+};
+
+window.closeProductModal = function() {
+    document.getElementById("crm-product-modal").classList.remove("active");
+};
+
+window.editProduct = function(id) {
+    const p = products.find(prod => prod.id === id);
+    if (!p) return;
+
+    document.getElementById("edit-prod-id").value = p.id;
+    document.getElementById("prod-title-input").value = p.title;
+    document.getElementById("prod-category-input").value = p.category;
+    document.getElementById("prod-price-input").value = p.price * 10000; // UZS representation adjustment
+    document.getElementById("prod-qty-input").value = p.stock || 15;
+    document.getElementById("prod-desc-input").value = p.description || "";
+
+    document.getElementById("product-modal-title").innerText = "Mahsulotni tahrirlash";
+    document.getElementById("crm-product-modal").classList.add("active");
+};
+
+window.handleProductSubmit = function(e) {
+    e.preventDefault();
+    const idVal = document.getElementById("edit-prod-id").value;
+    const title = document.getElementById("prod-title-input").value;
+    const category = document.getElementById("prod-category-input").value;
+    const price = parseFloat(document.getElementById("prod-price-input").value) / 10000;
+    const stock = parseInt(document.getElementById("prod-qty-input").value);
+    const desc = document.getElementById("prod-desc-input").value;
 
     if (idVal) {
-        // Edit mode
-        const prodId = parseInt(idVal);
-        const index = products.findIndex(p => p.id === prodId);
-        if (index > -1) {
-            products[index].title = name;
-            products[index].category = category;
-            products[index].price = price;
-            products[index].description = desc;
-            showToast("Product updated successfully");
+        // Update product
+        const prod = products.find(p => p.id === parseInt(idVal));
+        if (prod) {
+            prod.title = title;
+            prod.category = category;
+            prod.price = price;
+            prod.stock = stock;
+            prod.description = desc;
+            showToast("Mahsulot muvaffaqiyatli yangilandi!");
         }
     } else {
-        // Add mode
+        // Add product
         const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
         const defaultImg = category === "Women's Fashion" ? "images/womens_fashion.png" 
                          : category === "Men's Fashion" ? "images/mens_fashion.png"
                          : category === "Kids Fashion" ? "images/kids_fashion.png"
                          : "images/accessories.png";
-        
         products.push({
             id: newId,
-            title: name,
-            price: price,
-            originalPrice: null,
+            title: title,
             category: category,
+            price: price,
+            stock: stock,
+            description: desc,
             rating: 5.0,
-            image: defaultImg,
-            description: desc
+            image: defaultImg
         });
-        showToast("New product added to store");
+        showToast("Yangi mahsulot qo'shildi!");
     }
 
-    document.getElementById("crm-product-form").reset();
-    document.getElementById("edit-product-id").value = "";
-    document.getElementById("form-action-title").innerText = "Add Product";
-    loadCrmDashboard();
-}
+    closeProductModal();
+    renderCrmProducts();
+};
 
-// Delete CRM Product
-window.deleteCrmProduct = function(id) {
-    const index = products.findIndex(p => p.id === id);
-    if (index > -1) {
-        const title = products[index].title;
-        products.splice(index, 1);
-        loadCrmDashboard();
-        showToast(`"${title}" deleted from catalog`);
+window.deleteProduct = function(id) {
+    if (confirm("Ushbu mahsulotni o'chirishni xohlaysizmi?")) {
+        products = products.filter(p => p.id !== id);
+        renderCrmProducts();
+        showToast("Mahsulot o'chirildi!");
     }
 };
 
+// Customer Modal controls
+window.openAddCustomerModal = function() {
+    document.getElementById("crm-customer-editor-form").reset();
+    document.getElementById("crm-customer-modal").classList.add("active");
+};
+
+window.closeCustomerModal = function() {
+    document.getElementById("crm-customer-modal").classList.remove("active");
+};
+
+window.handleCustomerSubmit = function(e) {
+    e.preventDefault();
+    const name = document.getElementById("cust-name-input").value;
+    const phone = document.getElementById("cust-phone-input").value;
+    const email = document.getElementById("cust-email-input").value;
+    
+    const newId = crmCustomers.length > 0 ? Math.max(...crmCustomers.map(c => parseInt(c.id))) + 1 : 1;
+    crmCustomers.push({
+        id: String(newId),
+        name: name,
+        phone: phone,
+        email: email,
+        totalBought: 0,
+        ordersCount: 0
+    });
+
+    closeCustomerModal();
+    renderCrmCustomers();
+    showToast("Mijoz ro'yxatga qo'shildi!");
+};
+
+// Order Modal Controls
+window.openCreateOrderModal = function() {
+    document.getElementById("crm-order-editor-form").reset();
+    
+    // Fill customer selector
+    const custSelect = document.getElementById("order-cust-select");
+    custSelect.innerHTML = crmCustomers.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+    
+    // Fill products selector
+    const prodSelect = document.getElementById("order-prod-select");
+    prodSelect.innerHTML = products.map(p => `<option value="${p.id}">${p.title} (${(p.price*10000).toLocaleString('uz-UZ')} UZS)</option>`).join("");
+
+    document.getElementById("crm-order-modal").classList.add("active");
+};
+
+window.closeOrderModal = function() {
+    document.getElementById("crm-order-modal").classList.remove("active");
+};
+
+window.handleOrderSubmit = function(e) {
+    e.preventDefault();
+    const customer = document.getElementById("order-cust-select").value;
+    const prodId = parseInt(document.getElementById("order-prod-select").value);
+    const status = document.getElementById("order-status-select").value;
+    
+    const prod = products.find(p => p.id === prodId);
+    if (!prod) return;
+
+    const totalVal = prod.price * 10000;
+    const dateStr = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    const newId = crmOrders.length > 0 ? Math.max(...crmOrders.map(o => parseInt(o.id))) + 1 : 1;
+    
+    crmOrders.push({
+        id: String(newId),
+        customer: customer,
+        date: dateStr,
+        total: totalVal,
+        status: status,
+        items: `${prod.title} (1 ta)`
+    });
+
+    // Update customer stats
+    const custObj = crmCustomers.find(c => c.name === customer);
+    if (custObj) {
+        custObj.ordersCount += 1;
+        custObj.totalBought += totalVal;
+    }
+
+    closeOrderModal();
+    renderCrmOrders();
+    showToast("Yangi buyurtma yaratildi!");
+};
+
+window.updateCrmOrderStatus = function(id, status) {
+    const order = crmOrders.find(o => o.id === id);
+    if (order) {
+        order.status = status;
+        showToast(`Buyurtma #${id} holati yangilandi!`);
+        loadCrmDashboard();
+    }
+};
+
+window.printReceipt = function(id) {
+    const order = crmOrders.find(o => o.id === id);
+    if (!order) return;
+    
+    const win = window.open("", "_blank");
+    win.document.write(`
+        <html>
+            <head>
+                <title>Kvitansiya #${order.id}</title>
+                <style>
+                    body { font-family: monospace; padding: 20px; color: #333; }
+                    .receipt { max-width: 300px; margin: 0 auto; border: 1px dashed #ccc; padding: 20px; }
+                    .header { text-align: center; margin-bottom: 20px; }
+                    .header h2 { margin: 0; }
+                    .item-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+                    .total { border-top: 1px dashed #333; padding-top: 10px; font-weight: bold; }
+                    .footer { text-align: center; margin-top: 30px; font-size: 12px; }
+                </style>
+            </head>
+            <body>
+                <div class="receipt">
+                    <div class="header">
+                        <h2>ShopCo</h2>
+                        <p>Tashkent, Uzbekistan</p>
+                        <p>Buyurtma ID: #${order.id}</p>
+                    </div>
+                    <div class="content">
+                        <p>Mijoz: <strong>${order.customer}</strong></p>
+                        <p>Sana: ${order.date}</p>
+                        <hr style="border:0; border-top:1px dashed #ccc;">
+                        <div class="item-row">
+                            <span>Mahsulotlar:</span>
+                        </div>
+                        <p style="font-size:12px;">${order.items}</p>
+                        <div class="item-row total">
+                            <span>JAMI:</span>
+                            <span>${order.total.toLocaleString('uz-UZ')} UZS</span>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p>Xaridingiz uchun rahmat!</p>
+                    </div>
+                </div>
+                <script>window.print();</script>
+            </body>
+        </html>
+    `);
+    win.document.close();
+};

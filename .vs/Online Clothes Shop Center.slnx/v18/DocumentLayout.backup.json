@@ -14,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 85,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -33,6 +33,10 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "index.html",
@@ -40,7 +44,7 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\Soxibjon\\Desktop\\\u00A0\\Level 4 (2-kurslar uchun)\\2ND year 2ND smester\\Networking in the Cloud\\Online Clothes Shop Center\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-06-12T12:10:38.021Z",
               "EditorCaption": ""

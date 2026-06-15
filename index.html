@@ -544,125 +544,515 @@
     </section>
 
     <!-- CRM Dashboard Section -->
+    <!-- CRM Dashboard Section -->
     <section class="crm-section" id="crm-section">
-        <div class="container">
-            <div class="crm-header-row">
-                <h2 class="crm-title">OCSC <span>Management CRM</span></h2>
-                <button class="btn btn-primary" id="add-product-btn">Add Product</button>
-            </div>
+        <div class="crm-container">
+            <!-- Sidebar -->
+            <aside class="crm-sidebar">
+                <div class="sidebar-brand">
+                    <i class="ri-global-line"></i>
+                    <span>ShopCo</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-target="dashboard">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-item" data-target="mahsulotlar">
+                        <i class="ri-t-shirt-line"></i>
+                        <span>Mahsulotlar</span>
+                    </button>
+                    <button class="nav-item" data-target="buyurtmalar">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span>Buyurtmalar</span>
+                    </button>
+                    <button class="nav-item" data-target="mijozlar">
+                        <i class="ri-group-line"></i>
+                        <span>Mijozlar</span>
+                    </button>
+                    <button class="nav-item" data-target="hisobotlar">
+                        <i class="ri-bar-chart-box-line"></i>
+                        <span>Hisobotlar</span>
+                    </button>
+                    <button class="nav-item" data-target="kuponlar">
+                        <i class="ri-ticket-2-line"></i>
+                        <span>Kuponlar</span>
+                    </button>
+                    <button class="nav-item" data-target="xodimlar">
+                        <i class="ri-user-settings-line"></i>
+                        <span>Xodimlar</span>
+                    </button>
+                    <button class="nav-item" data-target="profil">
+                        <i class="ri-user-line"></i>
+                        <span>Profil</span>
+                    </button>
+                </nav>
 
-            <!-- Stats grid -->
-            <div class="crm-stats-grid">
-                <div class="crm-stat-card">
-                    <div class="crm-stat-icon"><i class="ri-wallet-3-line"></i></div>
-                    <div class="crm-stat-info">
-                        <h4>Total Revenue</h4>
-                        <div class="crm-stat-value" id="crm-revenue">$1,293.00</div>
-                    </div>
-                </div>
-                <div class="crm-stat-card">
-                    <div class="crm-stat-icon"><i class="ri-shopping-bag-3-line"></i></div>
-                    <div class="crm-stat-info">
-                        <h4>Total Orders</h4>
-                        <div class="crm-stat-value" id="crm-orders">6</div>
-                    </div>
-                </div>
-                <div class="crm-stat-card">
-                    <div class="crm-stat-icon"><i class="ri-user-star-line"></i></div>
-                    <div class="crm-stat-info">
-                        <h4>Subscribers</h4>
-                        <div class="crm-stat-value" id="crm-subs">124</div>
-                    </div>
-                </div>
-                <div class="crm-stat-card">
-                    <div class="crm-stat-icon"><i class="ri-store-line"></i></div>
-                    <div class="crm-stat-info">
-                        <h4>Active Products</h4>
-                        <div class="crm-stat-value" id="crm-products-count">8</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CRM Layout -->
-            <div class="crm-layout">
-                <!-- Orders and Products management -->
-                <div>
-                    <div class="crm-block">
-                        <div class="crm-block-title">Recent Customer Orders</div>
-                        <div class="crm-table-wrapper">
-                            <table class="crm-table">
-                               <thead>
-                                   <tr>
-                                       <th>Order ID</th>
-                                       <th>Customer</th>
-                                       <th>Items</th>
-                                       <th>Total</th>
-                                       <th>Status</th>
-                                       <th>Actions</th>
-                                   </tr>
-                               </thead>
-                               <tbody id="crm-orders-list">
-                                   <!-- Orders generated dynamically by JS -->
-                               </tbody>
-                            </table>
+                <div class="sidebar-footer">
+                    <div class="admin-profile">
+                        <div class="admin-avatar">
+                            <i class="ri-user-fill"></i>
+                        </div>
+                        <div class="admin-info">
+                            <h5>ShopCo</h5>
+                            <p>Administrator</p>
                         </div>
                     </div>
-
-                    <div class="crm-block">
-                        <div class="crm-block-title">Store Products Management</div>
-                        <div class="crm-table-wrapper">
-                            <table class="crm-table">
-                               <thead>
-                                   <tr>
-                                       <th>ID</th>
-                                       <th>Product</th>
-                                       <th>Category</th>
-                                       <th>Price</th>
-                                       <th>Rating</th>
-                                       <th>Actions</th>
-                                   </tr>
-                               </thead>
-                               <tbody id="crm-products-list">
-                                   <!-- Products generated dynamically by JS -->
-                               </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <button class="logout-btn" title="Chiqish" onclick="location.hash='#home'">
+                        <i class="ri-logout-box-r-line"></i>
+                    </button>
                 </div>
+            </aside>
 
-                <!-- Product entry form -->
-                <div>
-                    <div class="crm-block">
-                        <div class="crm-block-title" id="form-action-title">Add / Edit Product</div>
-                        <form id="crm-product-form">
-                            <input type="hidden" id="edit-product-id" value="">
-                            <div class="crm-form-group">
-                                <label for="prod-name">Product Title</label>
-                                <input type="text" id="prod-name" required placeholder="e.g. Silk Evening Gown">
+            <!-- Main Content Area -->
+            <main class="crm-main-content">
+                <!-- Top Header -->
+                <header class="crm-top-header">
+                    <div>
+                        <h2 id="crm-page-title">Boshqaruv Paneli</h2>
+                        <p id="crm-page-subtitle">Do'koningizdagi umumiy holat va ko'rsatkichlar</p>
+                    </div>
+                    <div class="system-status">
+                        <span class="status-indicator live"></span>
+                        <span>System Live</span>
+                    </div>
+                </header>
+
+                <!-- Tabs Container -->
+                <div class="crm-tab-content-wrapper">
+                    
+                    <!-- TAB 1: DASHBOARD -->
+                    <div class="crm-tab-pane active" id="tab-dashboard">
+                        <!-- Stats Grid -->
+                        <div class="crm-stats-grid">
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper blue">
+                                    <i class="ri-coins-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">UMUMIY SAVDO</span>
+                                    <h3 class="stat-value" id="stat-revenue">0 UZS</h3>
+                                </div>
                             </div>
-                            <div class="crm-form-group">
-                                <label for="prod-category">Category</label>
-                                <select id="prod-category">
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper gold">
+                                    <i class="ri-shopping-bag-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">BUYURTMALAR</span>
+                                    <h3 class="stat-value" id="stat-orders">0 ta</h3>
+                                </div>
+                            </div>
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper green">
+                                    <i class="ri-group-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">FAOL XARIDORLAR</span>
+                                    <h3 class="stat-value" id="stat-customers">0 ta</h3>
+                                </div>
+                            </div>
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper red">
+                                    <i class="ri-error-warning-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">KAM QOLGAN TOVAR</span>
+                                    <h3 class="stat-value" id="stat-low-stock">0 ta</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Grid -->
+                        <div class="crm-charts-grid">
+                            <div class="crm-chart-card double-width">
+                                <h4>Savdo Diagrammasi</h4>
+                                <div class="chart-container">
+                                    <canvas id="salesLineChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="crm-chart-card">
+                                <h4>Kategoriyalar ulushi</h4>
+                                <div class="chart-container">
+                                    <canvas id="categoryDoughnutChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Orders Table Block -->
+                        <div class="crm-table-block">
+                            <div class="table-block-header">
+                                <h3>So'nggi buyurtmalar</h3>
+                                <button class="btn btn-secondary text-btn" onclick="switchCrmTab('buyurtmalar')">
+                                    Barcha buyurtmalar <i class="ri-arrow-right-line"></i>
+                                </button>
+                            </div>
+                            <div class="crm-table-wrapper">
+                                <table class="crm-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>MIJOZ</th>
+                                            <th>SANA</th>
+                                            <th>SUMMA</th>
+                                            <th>HOLAT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboard-recent-orders">
+                                        <!-- Dynamically generated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: MAHSULOTLAR -->
+                    <div class="crm-tab-pane" id="tab-mahsulotlar">
+                        <div class="crm-action-bar">
+                            <div class="search-box-wrapper">
+                                <i class="ri-search-line"></i>
+                                <input type="text" id="search-products-input" placeholder="Mahsulotlarni qidirish...">
+                            </div>
+                            <div class="action-buttons-group">
+                                <select id="filter-category-select">
+                                    <option value="all">Barcha kategoriyalar</option>
                                     <option value="Women's Fashion">Women's Fashion</option>
                                     <option value="Men's Fashion">Men's Fashion</option>
                                     <option value="Kids Fashion">Kids Fashion</option>
                                     <option value="Accessories">Accessories</option>
                                 </select>
+                                <button class="btn btn-primary-gold" onclick="openAddProductModal()">
+                                    <i class="ri-add-line"></i> Yangi mahsulot
+                                </button>
                             </div>
-                            <div class="crm-form-group">
-                                <label for="prod-price">Price ($)</label>
-                                <input type="number" id="prod-price" step="0.01" min="1" required placeholder="e.g. 150.00">
-                            </div>
-                            <div class="crm-form-group">
-                                <label for="prod-desc">Description</label>
-                                <textarea id="prod-desc" rows="4" required placeholder="Product detail specs..."></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Save Product</button>
-                        </form>
+                        </div>
+
+                        <!-- Products Cards Grid -->
+                        <div class="crm-products-grid" id="crm-products-grid-container">
+                            <!-- Dynamically generated products cards -->
+                        </div>
                     </div>
+
+                    <!-- TAB 3: BUYURTMALAR -->
+                    <div class="crm-tab-pane" id="tab-buyurtmalar">
+                        <div class="crm-action-bar">
+                            <div class="search-box-wrapper">
+                                <i class="ri-search-line"></i>
+                                <input type="text" id="search-orders-input" placeholder="Buyurtmalarni qidirish...">
+                            </div>
+                            <button class="btn btn-primary-gold" onclick="openCreateOrderModal()">
+                                <i class="ri-add-line"></i> Yangi buyurtma yaratish
+                            </button>
+                        </div>
+
+                        <div class="crm-table-block">
+                            <div class="crm-table-wrapper">
+                                <table class="crm-table">
+                                    <thead>
+                                        <tr>
+                                            <th>BUYURTMA ID</th>
+                                            <th>MIJOZ</th>
+                                            <th>SANASI</th>
+                                            <th>SUMMASI</th>
+                                            <th>HOLATI</th>
+                                            <th>MAHSULOTLAR</th>
+                                            <th>HARAKATLAR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders-list-table">
+                                        <!-- Dynamically generated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: MIJOZLAR -->
+                    <div class="crm-tab-pane" id="tab-mijozlar">
+                        <div class="crm-action-bar">
+                            <div class="search-box-wrapper">
+                                <i class="ri-search-line"></i>
+                                <input type="text" id="search-customers-input" placeholder="Mijozlarni qidirish...">
+                            </div>
+                            <button class="btn btn-primary-gold" onclick="openAddCustomerModal()">
+                                <i class="ri-add-line"></i> Yangi mijoz
+                            </button>
+                        </div>
+
+                        <div class="crm-table-block">
+                            <div class="crm-table-wrapper">
+                                <table class="crm-table">
+                                    <thead>
+                                        <tr>
+                                            <th>MIJOZ ID</th>
+                                            <th>ISM-FAMILIYA</th>
+                                            <th>TELEFON</th>
+                                            <th>ELEKTRON POCHTA</th>
+                                            <th>SOTIB OLGAN SUMMASI</th>
+                                            <th>BUYURTMALAR SONI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="customers-list-table">
+                                        <!-- Dynamically generated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 5: HISOBOTLAR -->
+                    <div class="crm-tab-pane" id="tab-hisobotlar">
+                        <div class="crm-stats-grid">
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper blue">
+                                    <i class="ri-hand-coin-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">O'RTACHA CHEK SUMMASI</span>
+                                    <h3 class="stat-value" id="report-avg-order">900,000 UZS</h3>
+                                </div>
+                            </div>
+                            <div class="crm-stat-card">
+                                <div class="stat-icon-wrapper gold">
+                                    <i class="ri-line-chart-line"></i>
+                                </div>
+                                <div class="stat-data">
+                                    <span class="stat-label">MAKSIMAL SAVDO</span>
+                                    <h3 class="stat-value" id="report-max-order">1,450,000 UZS</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="crm-chart-card double-width">
+                            <h4>Yillik Savdo Hisoboti</h4>
+                            <div class="chart-container" style="height: 350px;">
+                                <canvas id="annualSalesBarChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 6: KUPONLAR -->
+                    <div class="crm-tab-pane" id="tab-kuponlar">
+                        <div class="crm-table-block">
+                            <div class="table-block-header">
+                                <h3>Faol Kuponlar</h3>
+                                <button class="btn btn-primary-gold" onclick="showToast('Kupon yaratish funksiyasi')">
+                                    + Yangi Kupon
+                                </button>
+                            </div>
+                            <div class="crm-table-wrapper">
+                                <table class="crm-table">
+                                    <thead>
+                                        <tr>
+                                            <th>KUPON KODI</th>
+                                            <th>CHEGIRMA (%)</th>
+                                            <th>MUDDATI</th>
+                                            <th>HOLATI</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>WELCOME10</strong></td>
+                                            <td>10%</td>
+                                            <td>31.12.2026</td>
+                                            <td><span class="status-badge completed">Faol</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>SPRING20</strong></td>
+                                            <td>20%</td>
+                                            <td>30.06.2026</td>
+                                            <td><span class="status-badge completed">Faol</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 7: XODIMLAR -->
+                    <div class="crm-tab-pane" id="tab-xodimlar">
+                        <div class="crm-table-block">
+                            <div class="table-block-header">
+                                <h3>Xodimlar Ro'yxati</h3>
+                                <button class="btn btn-primary-gold" onclick="showToast('Xodim qo\'shish funksiyasi')">
+                                    + Yangi Xodim
+                                </button>
+                            </div>
+                            <div class="crm-table-wrapper">
+                                <table class="crm-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>ISM-FAMILIYA</th>
+                                            <th>LAVOZIMI</th>
+                                            <th>TELEFON</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#1</td>
+                                            <td>Soxibjon G'aybullayev</td>
+                                            <td>Asoschi & Administrator</td>
+                                            <td>+998990001122</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#2</td>
+                                            <td>Dina Karimova</td>
+                                            <td>Menejer</td>
+                                            <td>+998935552211</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 8: PROFIL -->
+                    <div class="crm-tab-pane" id="tab-profil">
+                        <div class="crm-chart-card" style="max-width: 600px;">
+                            <h3>Profil Ma'lumotlari</h3>
+                            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 15px 0;">
+                            <div style="display:flex; flex-direction:column; gap: 15px;">
+                                <div>
+                                    <label style="color:#666; font-size:12px;">ADMINISTRATOR</label>
+                                    <h4 style="margin:5px 0 0 0; color:#fff;">Soxibjon G'aybullayev</h4>
+                                </div>
+                                <div>
+                                    <label style="color:#666; font-size:12px;">TIZIM ROLI</label>
+                                    <h4 style="margin:5px 0 0 0; color:var(--accent);">Tizim Yaratuvchisi (Root Administrator)</h4>
+                                </div>
+                                <div>
+                                    <label style="color:#666; font-size:12px;">EMAIL</label>
+                                    <h4 style="margin:5px 0 0 0; color:#fff;">admin@shopco.uz</h4>
+                                </div>
+                                <div>
+                                    <label style="color:#666; font-size:12px;">TELEFON</label>
+                                    <h4 style="margin:5px 0 0 0; color:#fff;">+998990001122</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- Add/Edit Product Modal Dialog -->
+        <div class="crm-modal" id="crm-product-modal">
+            <div class="crm-modal-content">
+                <div class="crm-modal-header">
+                    <h3 id="product-modal-title">Yangi mahsulot qo'shish</h3>
+                    <button class="crm-modal-close" onclick="closeProductModal()"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="crm-modal-body">
+                    <form id="crm-product-editor-form" onsubmit="handleProductSubmit(event)">
+                        <input type="hidden" id="edit-prod-id">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prod-title-input">Nomi</label>
+                                <input type="text" id="prod-title-input" required placeholder="Masalan: Slim Fit Djinsi Shim">
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-category-input">Kategoriya</label>
+                                <select id="prod-category-input">
+                                    <option value="Men's Fashion">Men's Fashion</option>
+                                    <option value="Women's Fashion">Women's Fashion</option>
+                                    <option value="Kids Fashion">Kids Fashion</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prod-price-input">Narxi (UZS)</label>
+                                <input type="number" id="prod-price-input" required placeholder="Masalan: 350000">
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-qty-input">Ombordagi soni</label>
+                                <input type="number" id="prod-qty-input" required placeholder="Masalan: 23">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-desc-input">Tavsif (Description)</label>
+                            <textarea id="prod-desc-input" rows="3" placeholder="Mahsulot haqida ma'lumot..."></textarea>
+                        </div>
+                        <div class="crm-modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Bekor qilish</button>
+                            <button type="submit" class="btn btn-primary-gold">Saqlash</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+        <!-- Add Customer Modal -->
+        <div class="crm-modal" id="crm-customer-modal">
+            <div class="crm-modal-content">
+                <div class="crm-modal-header">
+                    <h3>Yangi mijoz qo'shish</h3>
+                    <button class="crm-modal-close" onclick="closeCustomerModal()"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="crm-modal-body">
+                    <form id="crm-customer-editor-form" onsubmit="handleCustomerSubmit(event)">
+                        <div class="form-group">
+                            <label for="cust-name-input">Ism-Familiya</label>
+                            <input type="text" id="cust-name-input" required placeholder="Masalan: Denise Foley">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-phone-input">Telefon</label>
+                            <input type="text" id="cust-phone-input" required placeholder="+998990001122">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-email-input">Elektron pochta</label>
+                            <input type="email" id="cust-email-input" required placeholder="user@shopco.com">
+                        </div>
+                        <div class="crm-modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeCustomerModal()">Bekor qilish</button>
+                            <button type="submit" class="btn btn-primary-gold">Qo'shish</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Order Modal -->
+        <div class="crm-modal" id="crm-order-modal">
+            <div class="crm-modal-content">
+                <div class="crm-modal-header">
+                    <h3>Yangi buyurtma yaratish</h3>
+                    <button class="crm-modal-close" onclick="closeOrderModal()"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="crm-modal-body">
+                    <form id="crm-order-editor-form" onsubmit="handleOrderSubmit(event)">
+                        <div class="form-group">
+                            <label for="order-cust-select">Mijozni tanlang</label>
+                            <select id="order-cust-select">
+                                <!-- Generated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-prod-select">Mahsulotni tanlang</label>
+                            <select id="order-prod-select">
+                                <!-- Generated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-status-select">Buyurtma holati</label>
+                            <select id="order-status-select">
+                                <option value="KUTILMOQDA">KUTILMOQDA</option>
+                                <option value="YETKAZILDI">YETKAZILDI</option>
+                            </select>
+                        </div>
+                        <div class="crm-modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">Bekor qilish</button>
+                            <button type="submit" class="btn btn-primary-gold">Yaratish</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <!-- Footer Section -->
@@ -774,6 +1164,7 @@
     <div class="toast-container" id="toast-container"></div>
 
     <!-- App Logic Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
