@@ -724,3 +724,36 @@
 .btn-secondary:hover {
     background-color: var(--crm-border);
 }
+
+
+/* Fixes for storefront overlays & layout issues when CRM is active */
+body.crm-active {
+    overflow: hidden !important;
+    background-color: var(--crm-bg-main) !important;
+    height: 100vh !important;
+}
+
+body.crm-active header.header {
+    display: none !important;
+}
+
+body.crm-active footer.footer {
+    display: none !important;
+}
+
+/* Ensure no floating cart overlays or quick views show over active CRM */
+body.crm-active .cart-sidebar,
+body.crm-active .cart-overlay-bg,
+body.crm-active #quickview-modal {
+    display: none !important;
+}
+
+/* Ensure CRM Sidebar and Main Content always start from pixel 0 at top */
+body.crm-active #crm-section {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    z-index: 9999 !important; /* Always on top of any storefront leaks */
+}

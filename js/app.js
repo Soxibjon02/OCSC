@@ -476,26 +476,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let isCrmActive = false;
 
     crmViewBtn.addEventListener("click", () => {
-        isCrmActive = !isCrmActive;
-        if (isCrmActive) {
-            crmViewBtn.innerText = "Store View";
-            crmSection.classList.add("active");
-            // Hide all standard storefront wrappers
-            document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "none");
-            // Hide storefront navigation links
-            const navMenu = document.getElementById("nav-menu");
-            if (navMenu) navMenu.style.display = "none";
-            loadCrmDashboard();
-            showToast("OCSC Management CRM Dashboard Activated");
+        if (document.getElementById("crm-section").style.display === "block") {
+            window.deactivateCrmView();
         } else {
-            crmViewBtn.innerText = "CRM Panel";
-            crmSection.classList.remove("active");
-            // Show all standard storefront wrappers
-            document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "block");
-            // Show storefront navigation links
-            const navMenu = document.getElementById("nav-menu");
-            if (navMenu) navMenu.style.display = "flex";
-            showToast("Returned to Customer Storefront");
+            window.activateCrmView();
         }
     });
 
@@ -817,34 +801,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Override active view activator
 window.activateCrmView = function() {
-    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    document.body.classList.add("crm-active");
     const crmSec = document.getElementById("crm-section");
     if (crmSec) {
         crmSec.classList.add("active");
         crmSec.style.display = "block";
     }
     
-    // Hide default header, hero and footer elements if any
+    // Hide standard storefront headers, footers and all sections completely
     const header = document.querySelector("header.header");
-    if (header) header.style.display = "none";
+    if (header) {
+        header.style.setProperty("display", "none", "important");
+    }
     const footer = document.querySelector("footer.footer");
-    if (footer) footer.style.display = "none";
-    const hero = document.querySelector("section.hero");
-    if (hero) hero.style.display = "none";
-    const categories = document.querySelector("section.categories");
-    if (categories) categories.style.display = "none";
-    const trending = document.querySelector("section#trending");
-    if (trending) trending.style.display = "none";
-    const newArrivals = document.querySelector("section#new-arrivals");
-    if (newArrivals) newArrivals.style.display = "none";
-    const newsletter = document.querySelector("section.newsletter");
-    if (newsletter) newsletter.style.display = "none";
+    if (footer) {
+        footer.style.setProperty("display", "none", "important");
+    }
+    
+    document.querySelectorAll("section:not(.crm-section)").forEach(sec => {
+        sec.style.display = "none";
+    });
 
-    // Load Dashboard
+    // Handle crmViewBtn text in storefront header (if it exists)
+    const crmViewBtn = document.getElementById("crm-view-btn");
+    if (crmViewBtn) {
+        crmViewBtn.innerText = "Store View";
+    }
+
+    // Load Dashboard Tab
     switchCrmTab('dashboard');
 };
 
-// Switch active CRM tabs
+window.deactivateCrmView = function() {
+    document.body.classList.remove("crm-active");
+    const crmSec = document.getElementById("crm-section");
+    if (crmSec) {
+        crmSec.classList.remove("active");
+        crmSec.style.display = "none";
+    }
+    
+    // Show standard storefront headers, footers and restore all section displays
+    const header = document.querySelector("header.header");
+    if (header) {
+        header.style.display = "block";
+    }
+    const footer = document.querySelector("footer.footer");
+    if (footer) {
+        footer.style.display = "block";
+    }
+    
+    document.querySelectorAll("section:not(.crm-section)").forEach(sec => {
+        sec.style.display = ""; // Restore original layout setting (e.g. flex or grid)
+    });
+
+    const crmViewBtn = document.getElementById("crm-view-btn");
+    if (crmViewBtn) {
+        crmViewBtn.innerText = "CRM Panel";
+        crmViewBtn.style.display = "block"; // Keep visible for admin
+    }
+
+    showToast("Returned to Customer Storefront");
+};
 window.switchCrmTab = function(tabName) {
     activeCrmTab = tabName;
     
