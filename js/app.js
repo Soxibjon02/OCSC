@@ -299,15 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to activate CRM view directly
     function activateCrmView() {
-        const crmSection = document.getElementById("crm-section");
-        crmViewBtn.innerText = "Store View";
-        crmSection.classList.add("active");
-        isCrmActive = true;
-        // Hide storefront
-        document.querySelectorAll("section:not(.crm-section)").forEach(sec => sec.style.display = "none");
-        const navMenu = document.getElementById("nav-menu");
-        if (navMenu) navMenu.style.display = "none";
-        loadCrmDashboard();
+        window.activateCrmView();
     }
 
 
