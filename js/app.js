@@ -247,9 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (isAdmin) {
-            // Logged in as Admin: show CRM button & redirect automatically to CRM View
+            // Logged in as Admin: show CRM button in navbar, but do not auto redirect to CRM View
             crmViewBtn.style.display = "block";
-            activateCrmView();
         } else {
             // Logged in as Customer: ensure CRM button is hidden
             crmViewBtn.style.display = "none";
