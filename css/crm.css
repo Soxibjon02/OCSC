@@ -54,8 +54,8 @@ body.crm-active .crm-main-content {
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 80px;
+    height: calc(100vh - 80px);
     z-index: 100;
     flex-shrink: 0;
 }
