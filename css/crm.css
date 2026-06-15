@@ -35,9 +35,9 @@ body.crm-active footer.footer {
     display: none !important;
 }
 
-/* Ensure store header padding-top doesn't affect CRM layout */
+/* Ensure store header doesn't overlap CRM layout */
 body.crm-active .crm-main-content {
-    padding-top: 0;
+    padding-top: 90px;
 }
 
 .crm-container {
@@ -736,15 +736,13 @@ body.crm-active .crm-main-content {
 }
 
 
-/* Fixes for storefront overlays & layout issues when CRM is active */
 body.crm-active {
-    overflow: hidden !important;
     background-color: var(--crm-bg-main) !important;
-    height: 100vh !important;
 }
 
+/* Let the storefront header remain visible */
 body.crm-active header.header {
-    display: none !important;
+    display: block !important;
 }
 
 body.crm-active footer.footer {
