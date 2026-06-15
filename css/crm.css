@@ -765,3 +765,122 @@ body.crm-active #crm-section {
     height: 100vh !important;
     z-index: 9999 !important; /* Always on top of any storefront leaks */
 }
+
+
+/* =========================================================
+   CRM – Mobile Responsive
+   ========================================================= */
+
+/* 992px: slightly smaller sidebar */
+@media (max-width: 992px) {
+    .crm-sidebar {
+        width: 200px;
+    }
+    .crm-main-content {
+        padding: 24px 20px;
+        padding-top: 90px;
+    }
+    .crm-top-header h2 { font-size: 22px; }
+    .stats-grid        { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 768px: collapse sidebar into top bar */
+@media (max-width: 768px) {
+    /* Stack sidebar on top */
+    .crm-container {
+        flex-direction: column;
+    }
+
+    .crm-sidebar {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        top: 65px;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--crm-border);
+        z-index: 200;
+        overflow-x: auto;
+        padding: 0 10px;
+    }
+
+    .sidebar-brand {
+        display: none; /* hide brand on mobile — header already shows logo */
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        padding: 8px 0;
+        gap: 4px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .sidebar-nav::-webkit-scrollbar { height: 3px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: var(--crm-accent); }
+
+    .nav-item {
+        flex-shrink: 0;
+        font-size: 12px;
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
+
+    .sidebar-footer {
+        display: none; /* Hide admin footer on mobile */
+    }
+
+    /* Main content area */
+    .crm-main-content {
+        padding: 20px 14px;
+        padding-top: 20px; /* sidebar is now above, not behind header */
+        gap: 20px;
+    }
+
+    body.crm-active .crm-main-content {
+        padding-top: 20px;
+    }
+
+    .crm-top-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding-bottom: 16px;
+    }
+    .crm-top-header h2 { font-size: 20px; }
+
+    /* Stats */
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-card  { padding: 16px; }
+    .stat-value { font-size: 24px; }
+
+    /* Tables scroll horizontally */
+    .crm-table-wrapper, .crm-table, .table-container {
+        overflow-x: auto;
+    }
+    table { min-width: 500px; }
+
+    /* Form stacking */
+    .crm-form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Charts */
+    .charts-grid { grid-template-columns: 1fr; }
+    .chart-card  { padding: 16px; }
+}
+
+/* 480px: Very small phones */
+@media (max-width: 480px) {
+    .crm-sidebar    { top: 60px; }
+    .nav-item       { font-size: 11px; padding: 7px 10px; }
+    .stats-grid     { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-value     { font-size: 20px; }
+    .stat-label     { font-size: 11px; }
+    .crm-main-content { padding: 14px 10px; }
+    .crm-top-header h2 { font-size: 18px; }
+    table           { min-width: 420px; font-size: 12px; }
+    th, td          { padding: 10px 8px; }
+}
