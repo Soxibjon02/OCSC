@@ -329,6 +329,18 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast(`Switched to ${newTheme} theme`);
     });
 
+    const crmThemeBtn = document.getElementById("crm-theme-toggle");
+    if (crmThemeBtn) {
+        crmThemeBtn.addEventListener("click", () => {
+            let theme = document.documentElement.getAttribute("data-theme");
+            let newTheme = theme === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            updateThemeIcon(newTheme);
+            showToast(`Switched to ${newTheme} theme`);
+        });
+    }
+
     // 4. Burger mobile menu toggle
     const hamburger = document.getElementById("hamburger");
     const navMenu = document.getElementById("nav-menu");
@@ -493,10 +505,20 @@ document.addEventListener("DOMContentLoaded", () => {
 // Helper functions
 function updateThemeIcon(theme) {
     const icon = document.getElementById("theme-icon");
-    if (theme === "dark") {
-        icon.className = "ri-sun-line";
-    } else {
-        icon.className = "ri-moon-line";
+    if (icon) {
+        if (theme === "dark") {
+            icon.className = "ri-sun-line";
+        } else {
+            icon.className = "ri-moon-line";
+        }
+    }
+    const crmIcon = document.getElementById("crm-theme-icon");
+    if (crmIcon) {
+        if (theme === "dark") {
+            crmIcon.className = "ri-sun-line";
+        } else {
+            crmIcon.className = "ri-moon-line";
+        }
     }
 }
 

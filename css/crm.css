@@ -884,3 +884,100 @@ body.crm-active #crm-section {
     table           { min-width: 420px; font-size: 12px; }
     th, td          { padding: 10px 8px; }
 }
+
+/* CRM Navigation Bar Styles */
+.crm-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--crm-bg-sidebar);
+    border-bottom: 1px solid var(--crm-border);
+    padding: 15px 30px;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: 'Inter', sans-serif;
+}
+
+.crm-nav-logo a {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--crm-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.crm-nav-logo a span {
+    color: var(--crm-accent);
+}
+
+.crm-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.crm-theme-switch {
+    background: none;
+    border: 1px solid var(--crm-border);
+    color: var(--crm-text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.crm-theme-switch:hover {
+    background-color: var(--crm-bg-hover);
+    border-color: var(--crm-accent);
+    color: var(--crm-accent);
+}
+
+.crm-back-btn {
+    background-color: var(--crm-accent);
+    border: none;
+    color: #0c1017;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.crm-back-btn:hover {
+    background-color: var(--crm-accent-hover);
+    transform: translateY(-1px);
+}
+
+/* Adjust sidebar and container for sticky crm-navbar */
+body.crm-active .crm-main-content {
+    padding-top: 30px;
+}
+
+.crm-sidebar {
+    top: 70px;
+    height: calc(100vh - 70px);
+}
+
+@media (max-width: 768px) {
+    .crm-navbar {
+        padding: 10px 15px;
+    }
+    .crm-sidebar {
+        top: 70px;
+    }
+    body.crm-active .crm-main-content {
+        padding-top: 15px;
+    }
+}
+
