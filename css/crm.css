@@ -1,6 +1,6 @@
 /* Premium Dark-Gold CRM Stylesheet */
 
-:root {
+:root, [data-theme="dark"] {
     --crm-bg-main: #0c1017;
     --crm-bg-card: #131924;
     --crm-bg-sidebar: #0f141d;
@@ -13,6 +13,21 @@
     --crm-green: #10b981;
     --crm-red: #ef4444;
     --crm-blue: #3b82f6;
+}
+
+[data-theme="light"] {
+    --crm-bg-main: #f8fafc;
+    --crm-bg-card: #ffffff;
+    --crm-bg-sidebar: #f1f5f9;
+    --crm-bg-hover: #e2e8f0;
+    --crm-border: #cbd5e1;
+    --crm-accent: #d97706; /* dark gold for visibility in light mode */
+    --crm-accent-hover: #b45309;
+    --crm-text-primary: #0f172a;
+    --crm-text-secondary: #475569;
+    --crm-green: #059669;
+    --crm-red: #dc2626;
+    --crm-blue: #2563eb;
 }
 
 /* CRM Section Container Override */
