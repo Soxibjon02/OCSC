@@ -893,7 +893,7 @@ window.switchCrmTab = function(tabName) {
         'mijozlar': ['Mijozlar Bazasi', 'Sodiq mijozlar va aloqa ma\'lumotlari'],
         'hisobotlar': ['Analitika va Hisobotlar', 'Savdo ko\'rsatkichlari bo\'yicha chuqur tahlillar'],
         'kuponlar': ['Chegirma Kuponlari', 'Aktiv promo-kodlar va kuponlar ro\'yxati'],
-        'xodimlar': ['Xodimlar Boshqaruvi', 'Tizim foydalanuvchilari va rollari'],
+        'xodimlar': ['REMODULE', 'Tizim foydalanuvchilari va rollari'],
         'profil': ['Foydalanuvchi Profili', 'Hisob ma\'lumotlari va sozlamalari']
     };
 
