@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Online Clothes Shopping Center (OCSC) - Experience premium luxury fashion for men, women, and kids with modern, minimalist, and elegant apparel collection.">
     <meta name="keywords" content="OCSC, online clothes shopping center, luxury fashion, minimalist clothing, premium clothing store">
-    <title>OCSC - Premium Fashion Store</title>
+    <title>OCSC-RETAKE</title>
     
     <!-- Remix Icon Library -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -544,8 +544,22 @@
     </section>
 
     <!-- CRM Dashboard Section -->
-    <!-- CRM Dashboard Section -->
     <section class="crm-section" id="crm-section">
+        <!-- CRM Top Navbar -->
+        <nav class="crm-navbar">
+            <div class="crm-nav-logo">
+                <a href="#" onclick="location.hash='#home'; return false;">OCSC<span>.</span></a>
+            </div>
+            <div class="crm-nav-actions">
+                <button class="crm-theme-switch" id="crm-theme-toggle" aria-label="Toggle crm dark mode">
+                    <i class="ri-moon-line" id="crm-theme-icon"></i>
+                </button>
+                <button class="crm-back-btn" onclick="deactivateCrmView()">
+                    <i class="ri-arrow-left-line"></i> Store View
+                </button>
+            </div>
+        </nav>
+        
         <div class="crm-container">
             <!-- Sidebar -->
             <aside class="crm-sidebar">
